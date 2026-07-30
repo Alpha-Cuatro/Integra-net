@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Integra-net | Panel Docente</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../design.css">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="cerrarSidebar()"></div>
+
+<aside class="sidebar" id="mainSidebar">
+    <div class="logo">
+        <img src="../images/Integra-net.jpg" alt="logo" onerror="this.src='https://via.placeholder.com/70'">
+        <h2>Integra-net</h2>
+        <span>Panel Docente</span>
+    </div>
+    <nav class="menu">
+        <a class="active" data-section="inicio"><i class="fa-solid fa-house"></i> Inicio</a>
+        <a data-section="grupos"><i class="fa-solid fa-layer-group"></i> Mis Grupos</a>
+        <a data-section="evaluaciones"><i class="fa-solid fa-file-pen"></i> Evaluaciones</a>
+        <a data-section="calificaciones"><i class="fa-solid fa-star"></i> Calificaciones</a>
+        <a data-section="asistencia"><i class="fa-solid fa-calendar-check"></i> Asistencia</a>
+        <a data-section="observaciones"><i class="fa-solid fa-clipboard"></i> Observaciones</a>
+        <a data-section="estudiantes"><i class="fa-solid fa-user-graduate"></i> Estudiantes</a>
+        <a data-section="tareas"><i class="fa-solid fa-tasks"></i> Tareas</a>
+        <a data-section="chat"><i class="fa-solid fa-comments"></i> Chat <span id="chatNotifSidebar" class="notif-badge" style="display:none">0</span></a>
+        <a data-section="reportes"><i class="fa-solid fa-chart-simple"></i> Reportes</a>
+        <a data-section="perfil"><i class="fa-solid fa-user"></i> Perfil</a>
+    </nav>
+    <div class="sidebar-footer">
+        <button class="btn-cerrar-sesion" onclick="cerrarSesion()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+    </div>
+</aside>
+
+<header class="topbar ribbon-accent">
+    <div class="welcome">
+        <h1><i class="fa-solid fa-chalkboard-user"></i> Bienvenido Docente, <span id="nombreDocente">...</span></h1>
+        <p>Gestiona tus clases, evaluaciones y estudiantes</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px">
+        <button class="theme-toggle" onclick="toggleTheme()" title="Cambiar tema" aria-label="Cambiar tema claro/oscuro"><i class="fa-solid fa-moon"></i></button>
+        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+    </div>
+</header>
+
+<div class="main-content">
+    <!-- INICIO -->
+    <section id="inicio" class="dashboard active-section">
+        <div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="buscarGeneral" placeholder="Buscar..."></div>
+        <div class="resumen-tareas">
+            <div class="card-resumen"><div class="icon-card" style="background:#dbeafe;color:#2563eb"><i class="fa-solid fa-layer-group"></i></div><div class="card-info"><h3>Grupos</h3><span class="card-number" id="totalGrupos">0</span></div></div>
+            <div class="card-resumen"><div class="icon-card" style="background:#dcfce7;color:#16a34a"><i class="fa-solid fa-file-pen"></i></div><div class="card-info"><h3>Evaluaciones</h3><span class="card-number" id="totalEvaluaciones">0</span></div></div>
+            <div class="card-resumen"><div class="icon-card" style="background:#fef3c7;color:#d97706"><i class="fa-solid fa-users"></i></div><div class="card-info"><h3>Estudiantes</h3><span class="card-number" id="totalEstudiantes">0</span></div></div>
+            <div class="card-resumen"><div class="icon-card" style="background:var(--primary-lightest);color:var(--primary)"><i class="fa-solid fa-chart-line"></i></div><div class="card-info"><h3>Rendimiento</h3><span class="card-number" id="totalRendimiento">0%</span></div></div>
+        </div>
+        <div class="bloque-tareas">
+            <div class="bloque-header"><h2><i class="fa-solid fa-chart-bar"></i> Rendimiento General</h2></div>
+            <canvas id="chartRendimientoDocente" height="180"></canvas>
+        </div>
+        <div class="grid-2">
+            <div class="bloque-tareas">
+                <div class="bloque-header"><h2><i class="fa-solid fa-layer-group"></i> Mis Grupos</h2></div>
+                <div id="listaGruposResumen" class="lista-tareas"></div>
+            </div>
+            <div class="bloque-tareas">
+                <div class="bloque-header"><h2><i class="fa-solid fa-clock"></i> Próximas Evaluaciones</h2></div>
+                <div id="listaEvaluacionesProximas" class="lista-tareas"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GRUPOS -->
+    <section id="grupos" class="dashboard">
+        <div class="bloque-header"><h2><i class="fa-solid fa-layer-group"></i> Mis Grupos</h2><button class="btn-primary" onclick="abrirModalCrearGrupo()"><i class="fa-solid fa-plus"></i> Nuevo Grupo</button></div>
+        <div id="listaGrupos" class="lista-tareas"></div>
+    </section>
+
+    <!-- EVALUACIONES -->
+    <section id="evaluaciones" class="dashboard">
+        <div class="bloque-header"><h2><i class="fa-solid fa-file-pen"></i> Evaluaciones</h2><button class="btn-primary" onclick="abrirModalEvaluacion()"><i class="fa-solid fa-plus"></i> Nueva Evaluación</button></div>
+        <div class="filtros-bar">
+            <select id="filtroGradoEval" onchange="renderizarEvaluaciones()"><option value="">Todos los grados</option></select>
+            <select id="filtroSeccionEval" onchange="renderizarEvaluaciones()"><option value="">Todas las secciones</option></select>
+        </div>
+        <div id="listaEvaluaciones" class="lista-tareas"></div>
+    </section>
+
+    <!-- CALIFICACIONES -->
+    <section id="calificaciones" class="dashboard">
+        <div class="bloque-header"><h2><i class="fa-solid fa-star"></i> Calificaciones</h2></div>
+        <div class="filtros-bar">
+            <select id="filtroGradoCal" onchange="cargarCalificaciones()"><option value="">Seleccionar grado</option></select>
+            <select id="filtroSeccionCal" onchange="cargarCalificaciones()"><option value="">Seleccionar sección</option></select>
+            <select id="filtroEvalCal" onchange="cargarCalificaciones()"><option value="">Seleccionar evaluación</option></select>
+        </div>
+        <div id="listaCalificaciones" class="lista-tareas"></div>
+    </section>
+
+    <!-- ASISTENCIA -->
+    <section id="asistencia" class="dashboard">
+        <div class="bloque-header"><h2><i class="fa-solid fa-calendar-check"></i> Registro de Asistencia</h2></div>
+        <div class="filtros-bar">
+            <select id="filtroGradoAsis" onchange="cargarAsistencia()"><option value="">Seleccionar grado</option></select>
+            <select id="filtroSeccionAsis" onchange="cargarAsistencia()"><option value="">Seleccionar sección</option></select>
+            <input type="date" id="fechaAsistencia" onchange="cargarAsistencia()" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:12px">
+        </div>
+        <div id="listaAsistencia" class="lista-tareas"></div>
+    </section>
+
+    <!-- OBSERVACIONES -->
+    <section id="observaciones" class="dashboard">
+        <div class="bloque-header"><h2><i class="fa-solid fa-clipboard"></i> Observaciones</h2></div>
+        <div class="filtros-bar">
+            <select id="filtroGradoObs" onchange="cargarObservaciones()"><option value="">Seleccionar grado</option></select>
+            <select id="filtroSeccionObs" onchange="cargarObservaciones()"><option value="">Seleccionar sección</option></select>
+        </div>
+        <div id="listaObservaciones" class="lista-tareas"></div>
+    </section>
+
+    <!-- ESTUDIANTES -->
+    <section id="estudiantes" class="dashboard">
+        <div class="search-box"><i class="fa-solid fa-search"></i><input type="text" id="buscarEstudiante" placeholder="Buscar estudiante..."></div>
+        <div id="listaEstudiantes" class="lista-tareas"></div>
+    </section>
+
+    <!-- REPORTES -->
+    <section id="reportes" class="dashboard">
+        <div class="bloque-header"><h2><i class="fa-solid fa-chart-simple"></i> Reportes de mi Módulo</h2></div>
+        <div class="grid-2">
+            <div class="bloque-tareas">
+                <div class="bloque-header"><h2><i class="fa-solid fa-chart-bar"></i> Promedio por Grupo</h2></div>
+                <canvas id="chartReporteGrupos" height="200"></canvas>
+            </div>
+            <div class="bloque-tareas">
+                <div class="bloque-header"><h2><i class="fa-solid fa-circle-check"></i> Resumen General</h2></div>
+                <div id="resumenReporteDocente"></div>
+            </div>
+        </div>
+        <div class="bloque-tareas" style="margin-top:20px">
+            <div class="bloque-header"><h2><i class="fa-solid fa-table"></i> Rendimiento por Estudiante</h2></div>
+            <div id="tablaRendimiento" class="lista-tareas"></div>
+        </div>
+    </section>
+
+    <!-- TAREAS -->
+    <section id="tareas" class="dashboard">
+        <div class="bloque-header"><h2><i class="fa-solid fa-tasks"></i> Gestión de Tareas</h2><button class="btn-primary" onclick="abrirModalCrearTarea()"><i class="fa-solid fa-plus"></i> Nueva Tarea</button></div>
+        <div class="filtros-bar">
+            <select id="filtroTareaGrupoDocente" onchange="renderizarTareasDocente()">
+                <option value="">Todos los grupos</option>
+            </select>
+            <select id="filtroTareaEstadoDocente" onchange="renderizarTareasDocente()">
+                <option value="">Todos los estados</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="caducada">Caducada</option>
+            </select>
+        </div>
+        <div id="listaTareasDocente" class="lista-tareas"></div>
+    </section>
+
+    <!-- MODAL CREAR/EDITAR TAREA -->
+    <div id="modalCrearTareaOverlay" class="modal-overlay">
+        <div class="modal-contenido">
+            <h3 id="modalTareaTitulo"><i class="fa-solid fa-plus"></i> Nueva Tarea</h3>
+            <input type="text" id="tareaTitulo" placeholder="Título de la tarea">
+            <textarea id="tareaDescripcion" rows="3" placeholder="Descripción de la tarea"></textarea>
+            <select id="tareaGrupo"><option value="">Seleccionar grupo</option></select>
+            <input type="date" id="tareaFechaLimite">
+            <input type="number" id="tareaValor" placeholder="Valor (0-100)" min="0" max="100">
+            <div class="modal-buttons">
+                <button onclick="cerrarModalCrearTarea()">Cancelar</button>
+                <button onclick="guardarTareaDocente()"><i class="fa-solid fa-check"></i> Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL VER ENTREGAS -->
+    <div id="modalEntregasTarea" class="modal-overlay">
+        <div class="modal-contenido modal-lg" style="max-width:700px">
+            <h3 id="modalEntregasTitulo"><i class="fa-solid fa-eye"></i> Entregas</h3>
+            <div id="listaEntregasTarea"></div>
+            <div class="modal-buttons"><button onclick="cerrarModalEntregas()">Cerrar</button></div>
+        </div>
+    </div>
+
+    <!-- CHAT -->
+    <section id="chat" class="dashboard">
+        <div class="chat-app">
+            <!-- LISTA DE CONVERSACIONES -->
+            <div class="chat-sidebar" id="chatSidebar">
+                <div class="chat-sidebar-header">
+                    <div class="chat-sidebar-titulo">
+                        <i class="fa-solid fa-comments"></i>
+                        <span>Chat</span>
+                    </div>
+                    <button class="chat-btn-icon" onclick="chatUI.mostrarNuevoContacto()" title="Nuevo chat">
+                        <i class="fa-solid fa-square-pen"></i>
+                    </button>
+                </div>
+                <div class="chat-sidebar-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="buscarConversaciones" placeholder="Buscar o empezar nuevo chat..." oninput="chatUI.filtrarConversaciones(this.value)">
+                </div>
+                <div class="chat-sidebar-tabs">
+                    <button class="chat-tab active" data-tab="todas" onclick="chatUI.cambiarTab(this)">Todas</button>
+                    <button class="chat-tab" data-tab="noLeidos" onclick="chatUI.cambiarTab(this)">No leídos</button>
+                    <button class="chat-tab" data-tab="grupos" onclick="chatUI.cambiarTab(this)">Grupos</button>
+                </div>
+                <div id="listaConversaciones" class="chat-conversaciones-lista"></div>
+            </div>
+
+            <!-- PANEL PRINCIPAL DE CHAT -->
+            <div class="chat-main-panel" id="chatMainPanel">
+                <!-- PLACEHOLDER -->
+                <div class="chat-placeholder" id="chatPlaceholder">
+                    <div class="chat-placeholder-icon">
+                        <i class="fa-solid fa-message"></i>
+                    </div>
+                    <h3>Tus mensajes</h3>
+                    <p>Selecciona una conversación o inicia una nueva</p>
+                </div>
+
+                <!-- CONVERSACION ABIERTA -->
+                <div class="chat-conversacion" id="chatConversacion" style="display:none">
+                    <!-- HEADER -->
+                    <div class="chat-conv-header" id="chatConvHeader">
+                        <button class="chat-btn-back" onclick="chatUI.cerrarConversacion()" id="chatBackBtn">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <div class="chat-conv-header-avatar" id="chatHeaderAvatar" onclick="chatUI.abrirInfoContacto()">
+                            <img src="../images/avatar.png" id="chatAvatar" alt="">
+                            <span class="chat-online-dot" id="chatOnlineDot" style="display:none"></span>
+                        </div>
+                        <div class="chat-conv-header-info" onclick="chatUI.abrirInfoContacto()">
+                            <div class="chat-conv-header-nombre" id="chatContactoNombre">Nombre</div>
+                            <div class="chat-conv-header-status" id="chatContactoStatus">...</div>
+                        </div>
+                        <div class="chat-conv-header-acciones">
+                            <button class="chat-btn-icon" onclick="chatUI.abrirInfoGrupo()" id="chatBtnGrupoInfo" style="display:none" title="Información del grupo">
+                                <i class="fa-solid fa-info-circle"></i>
+                            </button>
+                            <button class="chat-btn-icon" onclick="chatUI.mostrarOpcionesConv()" title="Más opciones">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- MENSAJES -->
+                    <div class="chat-mensajes-area" id="chatMensajes">
+                        <div class="chat-mensajes-loading" id="chatLoadingMsgs">
+                            <div class="chat-skeleton"></div>
+                            <div class="chat-skeleton"></div>
+                            <div class="chat-skeleton"></div>
+                        </div>
+                    </div>
+
+                    <!-- REPLY PREVIEW -->
+                    <div class="chat-reply-preview" id="chatReplyPreview" style="display:none">
+                        <div class="chat-reply-content">
+                            <div class="chat-reply-bar" style="background:var(--primary)"></div>
+                            <div class="chat-reply-info">
+                                <span class="chat-reply-nombre" id="chatReplyNombre"></span>
+                                <span class="chat-reply-texto" id="chatReplyTexto"></span>
+                            </div>
+                            <button class="chat-reply-cerrar" onclick="chatUI.cancelarRespuesta()">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- INPUT BAR -->
+                    <div class="chat-input-bar" id="chatInputBar">
+                        <button class="chat-btn-input" onclick="chatUI.mostrarAdjuntar()" title="Adjuntar">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <div class="chat-input-wrapper">
+                            <input type="text" id="chatInput" placeholder="Escribe un mensaje..." autocomplete="off"
+                                oninput="chatUI.onInputChange()" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();chatUI.enviarMensaje()}">
+                            <div class="chat-input-adjuntos" id="chatInputAdjuntos" style="display:none"></div>
+                        </div>
+                        <button class="chat-btn-send" id="chatBtnSend" onclick="chatUI.enviarMensaje()">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL CONTACTOS / NUEVO CHAT -->
+    <div class="chat-modal-overlay" id="modalNuevoContacto" style="display:none" onclick="if(event.target===this)chatUI.cerrarModal('modalNuevoContacto')">
+        <div class="chat-modal">
+            <div class="chat-modal-header">
+                <h3><i class="fa-solid fa-user-plus"></i> Nuevo mensaje</h3>
+                <button class="chat-btn-icon" onclick="chatUI.cerrarModal('modalNuevoContacto')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="chat-modal-search">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" id="buscarContactos" placeholder="Buscar..." oninput="chatUI.filtrarContactos(this.value)">
+            </div>
+            <div class="chat-modal-filtros" id="contactosFiltros">
+                <select id="filtroGradoContacto" onchange="chatUI.filtrarContactos()">
+                    <option value="">Todos los grados</option>
+                </select>
+                <select id="filtroSeccionContacto" onchange="chatUI.filtrarContactos()">
+                    <option value="">Todas las secciones</option>
+                </select>
+                <select id="filtroGrupoContacto" onchange="chatUI.filtrarContactos()" style="display:none">
+                    <option value="">Todos los grupos</option>
+                </select>
+            </div>
+            <div class="chat-modal-lista" id="listaContactos"></div>
+        </div>
+    </div>
+
+    <!-- MODAL INFORMACIÓN GRUPO -->
+    <div class="chat-modal-overlay" id="modalInfoGrupo" style="display:none" onclick="if(event.target===this)chatUI.cerrarModal('modalInfoGrupo')">
+        <div class="chat-modal chat-modal-lg">
+            <div class="chat-modal-header">
+                <h3><i class="fa-solid fa-info-circle"></i> Información del grupo</h3>
+                <button class="chat-btn-icon" onclick="chatUI.cerrarModal('modalInfoGrupo')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="infoGrupoContent" class="chat-info-grupo"></div>
+        </div>
+    </div>
+
+    <!-- MODAL PERFIL MIEMBRO -->
+    <div class="chat-modal-overlay" id="modalPerfilMiembro" style="display:none" onclick="if(event.target===this)chatUI.cerrarModal('modalPerfilMiembro')">
+        <div class="chat-modal">
+            <div class="chat-modal-header">
+                <h3><i class="fa-solid fa-user"></i> Perfil</h3>
+                <button class="chat-btn-icon" onclick="chatUI.cerrarModal('modalPerfilMiembro')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="perfilMiembroContent"></div>
+        </div>
+    </div>
+
+    <!-- MENÚ CONTEXTUAL MENSAJE -->
+    <div class="chat-context-menu" id="chatContextMenu" style="display:none"></div>
+
+    <!-- REACTION PICKER -->
+    <div class="chat-reaction-picker" id="chatReactionPicker" style="display:none">
+        <button onclick="chatUI.reaccionar('&#128077;')">👍</button>
+        <button onclick="chatUI.reaccionar('&#10084;&#65039;')">❤️</button>
+        <button onclick="chatUI.reaccionar('&#128514;')">😂</button>
+        <button onclick="chatUI.reaccionar('&#128562;')">😮</button>
+        <button onclick="chatUI.reaccionar('&#128557;')">😢</button>
+        <button onclick="chatUI.reaccionar('&#128079;')">👏</button>
+        <button onclick="chatUI.reaccionar('&#127881;')">🎉</button>
+    </div>
+
+    <!-- MODAL ADJUNTAR ARCHIVO -->
+    <div class="chat-modal-overlay" id="modalAdjuntar" style="display:none" onclick="if(event.target===this)chatUI.cerrarModal('modalAdjuntar')">
+        <div class="chat-modal chat-modal-adjuntar">
+            <div class="chat-modal-header">
+                <h3><i class="fa-solid fa-paperclip"></i> Adjuntar</h3>
+                <button class="chat-btn-icon" onclick="chatUI.cerrarModal('modalAdjuntar')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="chat-adjuntar-grid">
+                <div class="chat-adjuntar-item" onclick="chatUI.adjuntarCamara()">
+                    <div class="chat-adjuntar-icon" style="background:#fee2e2;color:#ef4444"><i class="fa-solid fa-camera"></i></div>
+                    <span>Cámara</span>
+                </div>
+                <div class="chat-adjuntar-item" onclick="chatUI.adjuntarGaleria()">
+                    <div class="chat-adjuntar-icon" style="background:#dbeafe;color:#3b82f6"><i class="fa-solid fa-image"></i></div>
+                    <span>Galería</span>
+                </div>
+                <div class="chat-adjuntar-item" onclick="chatUI.adjuntarDocumento()">
+                    <div class="chat-adjuntar-icon" style="background:var(--primary-lightest);color:var(--primary)"><i class="fa-solid fa-file"></i></div>
+                    <span>Documento</span>
+                </div>
+                <div class="chat-adjuntar-item" onclick="chatUI.adjuntarAudio()">
+                    <div class="chat-adjuntar-icon" style="background:#fce7f3;color:#ec4899"><i class="fa-solid fa-microphone"></i></div>
+                    <span>Audio</span>
+                </div>
+                <div class="chat-adjuntar-item" onclick="chatUI.adjuntarUbicacion()">
+                    <div class="chat-adjuntar-icon" style="background:#d1fae5;color:#10b981"><i class="fa-solid fa-location-dot"></i></div>
+                    <span>Ubicación</span>
+                </div>
+                <div class="chat-adjuntar-item" onclick="chatUI.adjuntarContacto()">
+                    <div class="chat-adjuntar-icon" style="background:#f3e8ff;color:#9333ea"><i class="fa-solid fa-address-book"></i></div>
+                    <span>Contacto</span>
+                </div>
+                <div class="chat-adjuntar-item" onclick="chatUI.adjuntarEncuesta()" id="chatBtnEncuesta">
+                    <div class="chat-adjuntar-icon" style="background:#fef3c7;color:#f59e0b"><i class="fa-solid fa-chart-bar"></i></div>
+                    <span>Encuesta</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ENCUESTA -->
+    <div class="chat-modal-overlay" id="modalEncuesta" style="display:none" onclick="if(event.target===this)chatUI.cerrarModal('modalEncuesta')">
+        <div class="chat-modal">
+            <div class="chat-modal-header">
+                <h3><i class="fa-solid fa-chart-bar"></i> Crear encuesta</h3>
+                <button class="chat-btn-icon" onclick="chatUI.cerrarModal('modalEncuesta')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="chat-encuesta-form">
+                <input type="text" id="encuestaPregunta" placeholder="Escribe tu pregunta..." class="chat-input-full">
+                <div id="encuestaOpciones">
+                    <input type="text" class="chat-input-full" placeholder="Opción 1" style="margin-bottom:8px">
+                    <input type="text" class="chat-input-full" placeholder="Opción 2" style="margin-bottom:8px">
+                </div>
+                <button class="chat-btn-link" onclick="chatUI.agregarOpcionEncuesta()"><i class="fa-solid fa-plus"></i> Agregar opción</button>
+                <select id="encuestaTipo" class="chat-input-full" style="margin-top:12px">
+                    <option value="multiple">Múltiples respuestas</option>
+                    <option value="unica">Una sola respuesta</option>
+                </select>
+                <button class="chat-btn-primary" onclick="chatUI.enviarEncuesta()" style="margin-top:16px;width:100%">Crear encuesta</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL OPCIONES CONVERSACIÓN -->
+    <div class="chat-modal-overlay" id="modalOpcionesConv" style="display:none" onclick="if(event.target===this)chatUI.cerrarModal('modalOpcionesConv')">
+        <div class="chat-modal">
+            <div class="chat-modal-header">
+                <h3><i class="fa-solid fa-sliders"></i> Opciones</h3>
+                <button class="chat-btn-icon" onclick="chatUI.cerrarModal('modalOpcionesConv')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="opcionesConvContent" class="chat-opciones-lista"></div>
+        </div>
+    </div>
+
+    <!-- MODAL REPORTE DOCENTE -->
+    <div class="chat-modal-overlay" id="modalReporteChat" style="display:none" onclick="if(event.target===this)chatUI.cerrarModal('modalReporteChat')">
+        <div class="chat-modal">
+            <div class="chat-modal-header">
+                <h3><i class="fa-solid fa-file-export"></i> Exportar conversación</h3>
+                <button class="chat-btn-icon" onclick="chatUI.cerrarModal('modalReporteChat')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="chat-reporte-form">
+                <label>Fecha inicial</label>
+                <input type="date" id="reporteFechaInicio" class="chat-input-full">
+                <label>Fecha final</label>
+                <input type="date" id="reporteFechaFin" class="chat-input-full">
+                <div style="display:flex;gap:8px;margin-top:16px">
+                    <button class="chat-btn-primary" onclick="chatUI.exportarPDF()" style="flex:1"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                    <button class="chat-btn-primary" onclick="chatUI.exportarExcel()" style="flex:1;background:#10b981"><i class="fa-solid fa-file-excel"></i> Excel</button>
+                </div>
+                <button class="chat-btn-primary" onclick="chatUI.exportarImprimir()" style="margin-top:8px;width:100%;background:var(--primary)"><i class="fa-solid fa-print"></i> Imprimir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PERFIL -->
+    <section id="perfil" class="dashboard">
+        <div class="perfil-card">
+            <div class="perfil-portada"></div>
+            <div class="perfil-avatar" onclick="document.getElementById('avatarInput').click()">
+                <img id="avatarImg" src="../images/avatar.png" onerror="this.src='../images/avatar.png'">
+                <div class="avatar-edit-icon"><i class="fa-solid fa-camera"></i></div>
+            </div>
+            <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="cambiarAvatar(this)">
+            <div class="perfil-info">
+                <h2 id="perfilNombre"></h2>
+                <span class="rol-badge" style="background:#e0f2fe;color:#0284c7"><i class="fa-solid fa-chalkboard-user"></i> Docente</span>
+                <div id="perfilMateriaInfo" style="margin-top:8px;font-size:14px;color:#64748b"></div>
+            </div>
+            <div class="perfil-detalles">
+                <div class="detalle-item"><i class="fa-solid fa-envelope"></i> <span id="perfilEmail"></span></div>
+                <div class="detalle-item"><i class="fa-solid fa-id-card"></i> <span id="perfilCodigo"></span></div>
+                <div class="detalle-item"><i class="fa-solid fa-graduation-cap"></i> <span id="perfilEspecialidad"></span></div>
+                <div class="detalle-item"><i class="fa-solid fa-building"></i> <span id="perfilInstituto"></span></div>
+                <div class="detalle-item"><i class="fa-solid fa-phone"></i> <span id="perfilTelefono"></span></div>
+                <div class="detalle-item"><i class="fa-solid fa-location-dot"></i> <span id="perfilDireccion"></span></div>
+                <div class="detalle-item"><i class="fa-solid fa-calendar-alt"></i> Ingreso: <span id="perfilFechaIngreso"></span></div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<nav class="bottom-nav">
+    <a data-section="inicio" class="active"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+    <a data-section="grupos"><i class="fa-solid fa-layer-group"></i><span>Grupos</span></a>
+    <a data-section="evaluaciones"><i class="fa-solid fa-file-pen"></i><span>Evaluaciones</span></a>
+    <a data-section="tareas"><i class="fa-solid fa-tasks"></i><span>Tareas</span></a>
+    <a data-section="chat"><i class="fa-solid fa-comments"></i><span>Chat <span id="chatNotifBadge" class="notif-badge" style="display:none">0</span></span></a>
+    <a data-section="perfil"><i class="fa-solid fa-user"></i><span>Perfil</span></a>
+</nav>
+
+<!-- MODAL NUEVA EVALUACIÓN -->
+<div id="modalEvaluacionOverlay" class="modal-overlay">
+    <div class="modal-contenido">
+        <h3><i class="fa-solid fa-file-pen"></i> Nueva Evaluación</h3>
+        <select id="evalGrado" onchange="actualizarSeccionesEval()"><option value="">Seleccionar grado</option></select>
+        <select id="evalSeccion"><option value="">Seleccionar sección</option></select>
+        <input type="text" id="evalNombre" placeholder="Nombre de la evaluación">
+        <textarea id="evalDescripcion" rows="3" placeholder="Descripción"></textarea>
+        <input type="date" id="evalFecha">
+        <div style="display:flex;gap:10px">
+            <input type="number" id="evalValor" placeholder="Valor (%)" min="1" max="100" style="flex:1">
+            <input type="number" id="evalPuntajeMax" placeholder="Puntaje máximo" min="1" value="100" style="flex:1">
+        </div>
+        <div class="modal-buttons">
+            <button onclick="cerrarModalEvaluacion()">Cancelar</button>
+            <button onclick="crearEvaluacion()">Crear Evaluación</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CALIFICAR -->
+<div id="modalCalificarOverlay" class="modal-overlay">
+    <div class="modal-contenido modal-lg" style="max-width:700px">
+        <h3 id="modalCalificarTitulo"><i class="fa-solid fa-star"></i> Calificar</h3>
+        <div id="modalCalificarBody"></div>
+        <div class="modal-buttons"><button onclick="cerrarModalCalificar()">Cerrar</button></div>
+    </div>
+</div>
+
+<!-- MODAL CREAR GRUPO -->
+<div id="modalCrearGrupoOverlay" class="modal-overlay">
+    <div class="modal-contenido">
+        <h3><i class="fa-solid fa-layer-group"></i> Crear Nuevo Grupo</h3>
+        <input type="text" id="grupoNombre" placeholder="Nombre del grupo (ej: Derechos de la Mujer 10° A)">
+        <select id="grupoGrado">
+            <option value="">Seleccionar grado</option>
+            <option value="7mo">7mo</option>
+            <option value="8vo">8vo</option>
+            <option value="9no">9no</option>
+            <option value="10mo">10mo</option>
+            <option value="11vo">11vo</option>
+        </select>
+        <select id="grupoSeccion">
+            <option value="">Seleccionar sección</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+        </select>
+        <textarea id="grupoDescripcion" rows="3" placeholder="Descripción del grupo (opcional)"></textarea>
+        <div style="background:#f0fdf4;border-radius:12px;padding:12px;margin:10px 0">
+            <p style="font-size:13px;color:#16a34a"><i class="fa-solid fa-info-circle"></i> El sistema generará automáticamente un código único para este grupo.</p>
+        </div>
+        <div class="modal-buttons">
+            <button onclick="cerrarModalCrearGrupo()">Cancelar</button>
+            <button onclick="crearGrupo()">Crear Grupo</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL OBSERVACIÓN -->
+<div id="modalObservacionOverlay" class="modal-overlay">
+    <div class="modal-contenido">
+        <h3><i class="fa-solid fa-clipboard"></i> Nueva Observación</h3>
+        <select id="obsEstudiante"><option value="">Seleccionar estudiante</option></select>
+        <select id="obsTipo">
+            <option value="Rendimiento">Rendimiento</option>
+            <option value="Disciplina">Disciplina</option>
+            <option value="Liderazgo">Liderazgo</option>
+            <option value="Creatividad">Creatividad</option>
+            <option value="Participación">Participación</option>
+            <option value="Conducta">Conducta</option>
+            <option value="Trabajo en equipo">Trabajo en equipo</option>
+        </select>
+        <textarea id="obsDescripcion" rows="3" placeholder="Descripción de la observación"></textarea>
+        <div class="modal-buttons">
+            <button onclick="cerrarModalObservacion()">Cancelar</button>
+            <button onclick="guardarObservacion()">Guardar</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="../auth.js"></script>
+<script src="../perfil/datosIniciales.js"></script>
+<script src="../perfil/autenticacion.js"></script>
+<script src="../perfil/perfiles.js"></script>
+<script src="../perfil/perfilDocente.js"></script>
+<script src="../perfil/chat.js"></script>
+<script src="../perfil/chatUI.js"></script>
+<script src="../perfil/grupos.js"></script>
+<script src="../perfil/notificaciones.js"></script>
+<script src="../perfil/tareas.js"></script>
+<script src="./docente.js"></script>
+</body>
+</html>

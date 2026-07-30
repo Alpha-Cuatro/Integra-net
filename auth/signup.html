@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integra-net | Crear Cuenta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../design.css">
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+    <img src="../images/Fondo login.jpeg" alt="Fondo educativo Integra-net" class="fondo-login" aria-hidden="true">
+    <div class="signup-container">
+        <div class="signup-card ribbon-accent">
+            <div class="logo-section">
+                <img src="../images/Integra-net.jpg" alt="Integra-net logo">
+                <h1>Crear Cuenta</h1>
+                <p>Únete a la comunidad Integra-net</p>
+            </div>
+
+            <form id="signupForm" novalidate>
+                <div class="input-group">
+                    <i class="fa-solid fa-graduation-cap icon-left" aria-hidden="true"></i>
+                    <label for="rol" class="sr-only">Selecciona tu rol</label>
+                    <select id="rol" aria-required="true" aria-label="Rol">
+                        <option value="">Seleccione un rol</option>
+                        <option value="estudiante">Estudiante</option>
+                        <option value="docente">Docente</option>
+                    </select>
+                </div>
+
+                <div id="camposEstudiante" class="campos-rol" style="display:none" role="region" aria-label="Campos para estudiante">
+                    <div class="input-group">
+                        <i class="fa-solid fa-user icon-left" aria-hidden="true"></i>
+                        <label for="estNombre" class="sr-only">Nombre completo</label>
+                        <input type="text" id="estNombre" placeholder="Nombre completo" autocomplete="name" maxlength="100" aria-label="Nombre completo" aria-required="true">
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope icon-left" aria-hidden="true"></i>
+                        <label for="estCorreo" class="sr-only">Correo electrónico</label>
+                        <input type="email" id="estCorreo" placeholder="Correo electrónico" inputmode="email" autocomplete="email" maxlength="255" aria-label="Correo electrónico" aria-required="true">
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock icon-left" aria-hidden="true"></i>
+                        <label for="estPassword" class="sr-only">Contraseña</label>
+                        <input type="password" id="estPassword" placeholder="Contraseña" autocomplete="new-password" maxlength="128" aria-label="Contraseña" aria-required="true">
+                        <button type="button" class="toggle-password" data-target="estPassword" tabindex="-1" aria-label="Mostrar u ocultar contraseña"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group half">
+                            <i class="fa-solid fa-calendar icon-left" aria-hidden="true"></i>
+                            <label for="estFechaNac" class="sr-only">Fecha de nacimiento</label>
+                            <input type="date" id="estFechaNac" aria-label="Fecha de nacimiento">
+                        </div>
+                        <div class="input-group half">
+                            <i class="fa-solid fa-venus-mars icon-left" aria-hidden="true"></i>
+                            <label for="estSexo" class="sr-only">Sexo</label>
+                            <select id="estSexo" aria-label="Sexo">
+                                <option value="">Sexo</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group half">
+                            <i class="fa-solid fa-layer-group icon-left" aria-hidden="true"></i>
+                            <label for="estGrado" class="sr-only">Grado</label>
+                            <select id="estGrado" aria-label="Grado">
+                                <option value="">Grado</option>
+                                <option value="7mo">7mo</option>
+                                <option value="8vo">8vo</option>
+                                <option value="9no">9no</option>
+                                <option value="10mo">10mo</option>
+                                <option value="11vo">11vo</option>
+                            </select>
+                        </div>
+                        <div class="input-group half">
+                            <i class="fa-solid fa-table-cells icon-left" aria-hidden="true"></i>
+                            <label for="estSeccion" class="sr-only">Sección</label>
+                            <select id="estSeccion" aria-label="Sección">
+                                <option value="">Sección</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-user-tie icon-left" aria-hidden="true"></i>
+                        <label for="estTutor" class="sr-only">Nombre del tutor</label>
+                        <input type="text" id="estTutor" placeholder="Nombre del tutor" autocomplete="off" maxlength="100" aria-label="Nombre del tutor">
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-phone icon-left" aria-hidden="true"></i>
+                        <label for="estTelefono" class="sr-only">Teléfono</label>
+                        <input type="tel" id="estTelefono" placeholder="Teléfono" inputmode="tel" autocomplete="tel" maxlength="20" aria-label="Teléfono">
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-location-dot icon-left" aria-hidden="true"></i>
+                        <label for="estDireccion" class="sr-only">Dirección</label>
+                        <input type="text" id="estDireccion" placeholder="Dirección" autocomplete="street-address" maxlength="200" aria-label="Dirección">
+                    </div>
+                    <div class="input-group autocomplete">
+                        <i class="fa-solid fa-school icon-left" aria-hidden="true"></i>
+                        <label for="estInstituto" class="sr-only">Tu centro educativo</label>
+                        <input type="text" id="estInstituto" placeholder="Tu centro educativo" autocomplete="off" maxlength="120" aria-label="Tu centro educativo" aria-required="true" role="combobox" aria-expanded="false" aria-controls="estListaInstitutos" aria-autocomplete="list">
+                        <div id="estListaInstitutos" class="autocomplete-list" role="listbox"></div>
+                    </div>
+                </div>
+
+                <div id="camposDocente" class="campos-rol" style="display:none" role="region" aria-label="Campos para docente">
+                    <div class="input-group">
+                        <i class="fa-solid fa-user icon-left" aria-hidden="true"></i>
+                        <label for="docNombre" class="sr-only">Nombre completo</label>
+                        <input type="text" id="docNombre" placeholder="Nombre completo" autocomplete="name" maxlength="100" aria-label="Nombre completo" aria-required="true">
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope icon-left" aria-hidden="true"></i>
+                        <label for="docCorreo" class="sr-only">Correo electrónico</label>
+                        <input type="email" id="docCorreo" placeholder="Correo electrónico" inputmode="email" autocomplete="email" maxlength="255" aria-label="Correo electrónico" aria-required="true">
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock icon-left" aria-hidden="true"></i>
+                        <label for="docPassword" class="sr-only">Contraseña</label>
+                        <input type="password" id="docPassword" placeholder="Contraseña" autocomplete="new-password" maxlength="128" aria-label="Contraseña" aria-required="true">
+                        <button type="button" class="toggle-password" data-target="docPassword" tabindex="-1" aria-label="Mostrar u ocultar contraseña"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-flask icon-left" aria-hidden="true"></i>
+                        <label for="docEspecialidad" class="sr-only">Especialidad</label>
+                        <input type="text" id="docEspecialidad" placeholder="Especialidad" autocomplete="off" maxlength="100" aria-label="Especialidad" aria-required="true">
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-book-open icon-left" aria-hidden="true"></i>
+                        <label for="docMateria" class="sr-only">Módulo que imparte</label>
+                        <select id="docMateria" aria-label="Módulo que imparte" aria-required="true">
+                            <option value="">Módulo que imparte</option>
+                            <option value="mat01">Derechos de la Mujer: Fundamentos</option>
+                            <option value="mat02">Prevención de la Violencia de Género</option>
+                            <option value="mat03">Equidad de Género</option>
+                            <option value="mat04">Autoestima y Empoderamiento</option>
+                            <option value="mat05">Comunicación Asertiva y Resolución de Conflictos</option>
+                            <option value="mat06">Corresponsabilidad y Roles de Género</option>
+                            <option value="mat07">Salud y Bienestar Integral</option>
+                            <option value="mat08">Ciudadanía, Participación y Liderazgo</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-phone icon-left" aria-hidden="true"></i>
+                        <label for="docTelefono" class="sr-only">Teléfono</label>
+                        <input type="tel" id="docTelefono" placeholder="Teléfono" inputmode="tel" autocomplete="tel" maxlength="20" aria-label="Teléfono">
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-location-dot icon-left" aria-hidden="true"></i>
+                        <label for="docDireccion" class="sr-only">Dirección</label>
+                        <input type="text" id="docDireccion" placeholder="Dirección" autocomplete="street-address" maxlength="200" aria-label="Dirección">
+                    </div>
+                    <div class="input-group autocomplete">
+                        <i class="fa-solid fa-school icon-left" aria-hidden="true"></i>
+                        <label for="docInstituto" class="sr-only">Tu centro educativo</label>
+                        <input type="text" id="docInstituto" placeholder="Tu centro educativo" autocomplete="off" maxlength="120" aria-label="Tu centro educativo" aria-required="true" role="combobox" aria-expanded="false" aria-controls="docListaInstitutos" aria-autocomplete="list">
+                        <div id="docListaInstitutos" class="autocomplete-list" role="listbox"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-signup" id="btnRegistro">
+                    <span class="btn-text">Registrarse</span>
+                    <span class="btn-spinner" aria-hidden="true"><i class="fa-solid fa-spinner fa-spin"></i></span>
+                </button>
+            </form>
+
+            <div class="extra-links">
+                <p>¿Ya tienes cuenta? <a href="login.html" aria-label="Iniciar sesión en Integra-net">Iniciar sesión</a></p>
+            </div>
+        </div>
+
+        <div id="modalMensaje" class="modal-mensaje" role="dialog" aria-modal="true" aria-labelledby="tituloMensaje" aria-hidden="true">
+            <div class="modal-contenido" tabindex="-1">
+                <div id="iconoMensaje" class="icono"><i class="fa-solid fa-circle-info"></i></div>
+                <h2 id="tituloMensaje">Mensaje</h2>
+                <p id="textoMensaje">Aquí aparecerá el mensaje.</p>
+                <div class="botones-modal">
+                    <button id="btnCerrar" class="btn-cerrar"><i class="fa-solid fa-check"></i> Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastNotification" class="toast-global" role="alert" aria-live="polite"></div>
+
+    <script src="../auth.js"></script>
+    <script src="signup.js"></script>
+</body>
+</html>
