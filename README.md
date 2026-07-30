@@ -116,3 +116,17 @@ No requiere build ni instalación de dependencias. Para ejecutarlo:
 ## 🧩 Control de versiones
 
 El desarrollo se llevó mediante Git, con commits incrementales documentando el avance del prototipo (estructura inicial, diseño, autenticación, tablas, dashboard, versiones de funcionalidad).
+
+*_PERFILES DE USUARIO CON DATOS DEFINIDOS DENTRO DEL PROTOTIPO_*
+
+*Docente*
+
+Correo: manuel.antonio@colegio.edu
+
+Contraseña: Manuel@2026
+
+*Estudiante*
+
+Correo: juan.carlos@colegio.edu
+
+Contraseña: JuanCarlos@2026
