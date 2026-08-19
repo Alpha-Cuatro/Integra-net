@@ -99,7 +99,7 @@
 .menu a.active {
   background: var(--primary-gradient);
   color: white;
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 16px rgba(122, 32, 89, 0.3);
   font-weight: 600;
 }
 .menu a .notif-badge {
@@ -1355,7 +1355,7 @@
   background: var(--primary-gradient);
   color: white;
   border-bottom-right-radius: 4px;
-  box-shadow: 0 1px 4px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 1px 4px rgba(122, 32, 89, 0.15);
 }
 
 .chat-msg-otro .chat-msg-burbuja {
@@ -1647,15 +1647,15 @@
   font-size: 1rem;
   transition: all var(--transition-fast);
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 2px 8px rgba(122, 32, 89, 0.25);
 }
 .chat-btn-send:hover {
   transform: scale(1.08);
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+  box-shadow: 0 4px 16px rgba(122, 32, 89, 0.35);
 }
 .chat-btn-send:active { transform: scale(0.92); }
 .chat-btn-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
-.chat-btn-send.has-content { opacity: 1; box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3); }
+.chat-btn-send.has-content { opacity: 1; box-shadow: 0 2px 8px rgba(122, 32, 89, 0.3); }
 
 /* Context Menu */
 .chat-context-menu {

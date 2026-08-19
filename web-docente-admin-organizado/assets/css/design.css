@@ -76,9 +76,15 @@
   --radius-full: 50%;
   --radius-pill: 9999px;
 
-  --font: 'Lexend', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Fraunces', 'Segoe UI', Georgia, serif;
+  --font: 'Lora', Georgia, 'Times New Roman', serif;
+  --font-display: 'Lora', Georgia, 'Times New Roman', serif;
   --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+
+  --text-h1: clamp(2.75rem, 5vw, 3.25rem);
+  --text-h2: clamp(2rem, 4vw, 2.25rem);
+  --text-h3: clamp(1.375rem, 3vw, 1.5rem);
+  --text-body: clamp(1rem, 2vw, 1.125rem);
+  --text-caption: clamp(0.8125rem, 1.5vw, 0.875rem);
 
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -105,6 +111,7 @@ html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
 body {
   font-family: var(--font);
+  font-size: var(--text-body);
   background: var(--bg);
   color: var(--text-primary);
   min-height: 100vh;
@@ -118,9 +125,14 @@ body {
 ::selection { background: var(--primary-light); color: var(--primary); }
 :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 
-h1, h2, h3 {
+h1, h2 {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
   letter-spacing: -0.01em;
 }
 
@@ -175,9 +187,9 @@ h1, h2, h3 {
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 @keyframes notif-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.5); }
-  70% { box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(122, 32, 89, 0.5); }
+  70% { box-shadow: 0 0 0 8px rgba(122, 32, 89, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(122, 32, 89, 0); }
 }
 @keyframes toast-in {
   0% { opacity: 0; transform: translateX(-50%) translateY(100px) scale(0.9); }
