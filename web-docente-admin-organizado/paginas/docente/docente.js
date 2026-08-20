@@ -131,7 +131,7 @@ function renderizarDashboard() {
 
     const grupos = PERFIL_DOCENTE.getEstudiantesAgrupados();
     document.getElementById('listaGruposResumen').innerHTML = Object.values(grupos).slice(0, 6).map(g =>
-        `<div class="grupo-card" style="border-left-color:#2563eb;padding:12px">
+        `<div class="grupo-card" style="border-left-color:#560591;padding:12px">
             <div><div class="grupo-nombre">${escapeHtml(g.grado)} - Sección ${escapeHtml(g.seccion)}</div>
             <div class="grupo-desc">${g.estudiantes.length} estudiantes</div></div>
         </div>`
@@ -141,7 +141,7 @@ function renderizarDashboard() {
     const ahora = new Date();
     const proximas = evaluaciones.filter(ev => new Date(ev.fecha) >= ahora).sort((a, b) => new Date(a.fecha) - new Date(b.fecha)).slice(0, 5);
     document.getElementById('listaEvaluacionesProximas').innerHTML = proximas.map(ev =>
-        `<div class="tarea-card" style="border-left-color:#f59e0b;padding:12px">
+        `<div class="tarea-card" style="border-left-color:#D8A1FF;padding:12px">
             <div class="tarea-titulo">${escapeHtml(ev.nombre)}</div>
             <div class="tarea-footer">${escapeHtml(ev.grado)}-${escapeHtml(ev.seccion)} | ${PERFILES.formatearFecha(ev.fecha)}</div>
         </div>`
@@ -158,7 +158,7 @@ function renderizarDashboard() {
             labels,
             datasets: [{
                 data,
-                backgroundColor: ['#10b981', '#ef4444'],
+                backgroundColor: ['#10b981', '#B02B44'],
                 borderWidth: 3,
                 borderColor: '#fff',
                 hoverOffset: 8,
@@ -177,11 +177,11 @@ function renderizarDashboard() {
                         usePointStyle: true,
                         pointStyle: 'circle',
                         font: { size: 11 },
-                        color: '#475569',
+                        color: '#454546',
                     }
                 },
                 tooltip: {
-                    backgroundColor: '#1e293b',
+                    backgroundColor: '#3E036E',
                     padding: 12,
                     cornerRadius: 8,
                     bodyFont: { size: 13, weight: '500' },
@@ -209,7 +209,7 @@ function renderizarGrupos() {
         html += '<div class="bloque-header" style="margin-top:0"><h3 style="font-size:0.9rem"><i class="fa-solid fa-star"></i> Grupos Creados</h3></div>';
         html += gruposCreados.map(g => {
             const codigoCorto = g.codigo || '---';
-            return `<div class="grupo-card" style="border-left-color:#059669;flex-wrap:wrap">
+            return `<div class="grupo-card" style="border-left-color:#10b981;flex-wrap:wrap">
                 <div style="flex:1;min-width:200px">
                     <div class="grupo-nombre"><i class="fa-solid fa-layer-group"></i> ${escapeHtml(g.nombre)}</div>
                     <div class="grupo-desc">${escapeHtml(g.materiaNombre)} | ${escapeHtml(g.grado)}-${escapeHtml(g.seccion)}</div>
@@ -339,10 +339,10 @@ function renderizarEvaluaciones() {
     evaluaciones.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
 
     document.getElementById('listaEvaluaciones').innerHTML = evaluaciones.map(ev =>
-        `<div class="tarea-card" style="border-left-color:#8b5cf6">
+        `<div class="tarea-card" style="border-left-color:#7A10C0">
             <div class="tarea-header">
                 <span class="tarea-titulo"><i class="fa-solid fa-file-pen"></i> ${escapeHtml(ev.nombre)}</span>
-                <span class="badge-nota" style="background:#e0e7ff;color:#4f46e5">${escapeHtml(ev.grado)}-${escapeHtml(ev.seccion)}</span>
+                <span class="badge-nota" style="background:#F0E6F7;color:#560591">${escapeHtml(ev.grado)}-${escapeHtml(ev.seccion)}</span>
             </div>
             <div class="tarea-desc">${escapeHtml(ev.descripcion)}</div>
             <div class="tarea-footer">
@@ -397,13 +397,13 @@ function abrirCalificar(evalId, evalNombre, grado, seccion) {
     const evals = PERFIL_DOCENTE.getEvaluaciones().find(e => e.id === evalId);
     const body = estudiantes.map(est => {
         const cal = PERFIL_DOCENTE.getCalificacionesPorEstudiante(est.id).find(c => c.evaluacionId === evalId);
-        return `<div class="tarea-card" style="border-left-color:${cal ? PERFILES.obtenerNotaColor(cal.nota) : '#94a3b8'};margin-bottom:8px">
+        return `<div class="tarea-card" style="border-left-color:${cal ? PERFILES.obtenerNotaColor(cal.nota) : '#9A9A9B'};margin-bottom:8px">
             <div style="flex:1">
                 <div class="tarea-titulo">${escapeHtml(est.nombre)}</div>
-                <div style="font-size:12px;color:#64748b">${est.grado}-${est.seccion}</div>
+                <div style="font-size:12px;color:#6B6B6C">${est.grado}-${est.seccion}</div>
             </div>
             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-                <input type="number" id="nota_${est.id}_${evalId}" placeholder="Nota" value="${cal ? cal.nota : ''}" min="0" max="${evals?.puntajeMaximo || 100}" style="width:80px;padding:6px 10px;border:1px solid #e2e8f0;border-radius:10px;text-align:center">
+                <input type="number" id="nota_${est.id}_${evalId}" placeholder="Nota" value="${cal ? cal.nota : ''}" min="0" max="${evals?.puntajeMaximo || 100}" style="width:80px;padding:6px 10px;border:1px solid #E8DDD0;border-radius:10px;text-align:center">
                 <button class="btn-primary" style="padding:6px 14px;font-size:12px" onclick="guardarNota('${evalId}','${est.id}','${grado}','${seccion}')"><i class="fa-solid fa-check"></i></button>
             </div>
         </div>`;
@@ -428,7 +428,7 @@ function guardarNota(evalId, estudianteId, grado, seccion) {
     const est = PERFIL_DOCENTE.getEstudiantes().find(e => e.id === estudianteId);
     if (est) {
         const cal = PERFIL_DOCENTE.getCalificacionesPorEstudiante(estudianteId).find(c => c.evaluacionId === evalId);
-        const color = cal ? PERFILES.obtenerNotaColor(cal.nota) : '#94a3b8';
+        const color = cal ? PERFILES.obtenerNotaColor(cal.nota) : '#9A9A9B';
         const card = input.closest('.tarea-card');
         if (card) card.style.borderLeftColor = color;
     }
@@ -466,14 +466,14 @@ function cargarCalificaciones() {
     const estudiantes = PERFIL_DOCENTE.getEstudiantesPorGradoSeccion(ev.grado, ev.seccion);
     const html = estudiantes.map(est => {
         const cal = PERFIL_DOCENTE.getCalificacionesPorEstudiante(est.id).find(c => c.evaluacionId === evalId);
-        return `<div class="tarea-card" style="border-left-color:${cal ? PERFILES.obtenerNotaColor(cal.nota) : '#94a3b8'}">
+        return `<div class="tarea-card" style="border-left-color:${cal ? PERFILES.obtenerNotaColor(cal.nota) : '#9A9A9B'}">
             <div style="flex:1">
                 <div class="tarea-titulo">${escapeHtml(est.nombre)}</div>
                 <div class="tarea-desc">${est.grado}-${est.seccion}</div>
             </div>
             <div style="text-align:right">
-                <div style="font-weight:700;font-size:1.2rem;color:${cal ? PERFILES.obtenerNotaColor(cal.nota) : '#94a3b8'}">${cal ? cal.nota : '-'}/${ev.puntajeMaximo}</div>
-                <div style="font-size:11px;color:#64748b">${cal ? PERFILES.obtenerLetraNota(cal.nota) : 'Sin nota'}</div>
+                <div style="font-weight:700;font-size:1.2rem;color:${cal ? PERFILES.obtenerNotaColor(cal.nota) : '#9A9A9B'}">${cal ? cal.nota : '-'}/${ev.puntajeMaximo}</div>
+                <div style="font-size:11px;color:#6B6B6C">${cal ? PERFILES.obtenerLetraNota(cal.nota) : 'Sin nota'}</div>
             </div>
         </div>`;
     }).join('');
@@ -508,14 +508,14 @@ function cargarAsistencia() {
         const asis = asistencias.find(a => a.estudianteId === est.id && a.fecha === fecha);
         const tipoActual = asis ? asis.tipo : '';
         const tipos = ['Presente', 'Ausente', 'Tarde', 'Justificado'];
-        const colores = { Presente: '#10b981', Ausente: '#ef4444', Tarde: '#f59e0b', Justificado: '#6366f1' };
-        return `<div class="tarea-card" style="border-left-color:${tipoActual ? colores[tipoActual] : '#94a3b8'}">
+        const colores = { Presente: '#10b981', Ausente: '#B02B44', Tarde: '#D8A1FF', Justificado: '#560591' };
+        return `<div class="tarea-card" style="border-left-color:${tipoActual ? colores[tipoActual] : '#9A9A9B'}">
             <div style="flex:1">
                 <div class="tarea-titulo">${escapeHtml(est.nombre)}</div>
-                <div style="font-size:12px;color:#64748b">${est.grado}-${est.seccion}</div>
+                <div style="font-size:12px;color:#6B6B6C">${est.grado}-${est.seccion}</div>
             </div>
             <div style="display:flex;gap:4px;flex-wrap:wrap">
-                ${tipos.map(t => `<button class="btn-asistencia ${tipoActual === t ? 'activo' : ''}" style="padding:4px 10px;border-radius:8px;border:none;cursor:pointer;font-size:11px;font-weight:600;background:${tipoActual === t ? colores[t] : '#f1f5f9'};color:${tipoActual === t ? 'white' : '#64748b'}" onclick="registrarAsistencia('${est.id}','${fecha}','${t}')">${t.slice(0,4)}</button>`).join('')}
+                ${tipos.map(t => `<button class="btn-asistencia ${tipoActual === t ? 'activo' : ''}" style="padding:4px 10px;border-radius:8px;border:none;cursor:pointer;font-size:11px;font-weight:600;background:${tipoActual === t ? colores[t] : '#F0E6F7'};color:${tipoActual === t ? 'white' : '#454546'}" onclick="registrarAsistencia('${est.id}','${fecha}','${t}')">${t.slice(0,4)}</button>`).join('')}
             </div>
         </div>`;
     }).join('');
@@ -552,10 +552,10 @@ function cargarObservaciones() {
         return `<div class="grupo-card" style="flex-wrap:wrap">
             <div style="flex:1;min-width:150px">
                 <div class="grupo-nombre">${escapeHtml(est.nombre)}</div>
-                <div style="font-size:12px;color:#64748b">${est.grado}-${est.seccion}</div>
+                <div style="font-size:12px;color:#6B6B6C">${est.grado}-${est.seccion}</div>
             </div>
             <div style="flex:2;min-width:200px">
-                ${obs.map(o => `<div style="font-size:12px;padding:4px 8px;background:#f1f5f9;border-radius:8px;margin:3px 0"><strong>${escapeHtml(o.tipo)}:</strong> ${escapeHtml(o.descripcion)}</div>`).join('') || '<div style="color:#94a3b8;font-size:12px">Sin observaciones</div>'}
+                ${obs.map(o => `<div style="font-size:12px;padding:4px 8px;background:#F0E6F7;border-radius:8px;margin:3px 0"><strong>${escapeHtml(o.tipo)}:</strong> ${escapeHtml(o.descripcion)}</div>`).join('') || '<div style="color:#9A9A9B;font-size:12px">Sin observaciones</div>'}
             </div>
             <button class="btn-primary" style="padding:6px 14px;font-size:11px" onclick="abrirModalObservacion('${est.id}','${escapeHtml(est.nombre)}')"><i class="fa-solid fa-plus"></i> Añadir</button>
         </div>`;
@@ -599,10 +599,10 @@ function renderizarEstudiantes() {
             <img src="${PERFILES.obtenerAvatar(est.id)}" class="chat-avatar-list" onerror="this.src='../../assets/images/avatar.png'">
             <div style="flex:1">
                 <div class="grupo-nombre">${escapeHtml(est.nombre)}</div>
-                <div style="font-size:12px;color:#64748b">${est.grado}-${est.seccion} | Promedio: <span style="color:${PERFILES.obtenerNotaColor(m?.promedio || 0)};font-weight:600">${m?.promedio || 0}%</span></div>
+                <div style="font-size:12px;color:#6B6B6C">${est.grado}-${est.seccion} | Promedio: <span style="color:${PERFILES.obtenerNotaColor(m?.promedio || 0)};font-weight:600">${m?.promedio || 0}%</span></div>
             </div>
             <button class="btn-primary" style="padding:6px 10px;font-size:10px" onclick="iniciarChatCon('${est.id}','${escapeHtml(est.nombre)}')" title="Chatear"><i class="fa-solid fa-comment"></i></button>
-            <button class="btn-primary" style="padding:6px 10px;font-size:10px;background:#8b5cf6" onclick="abrirModalObservacion('${est.id}','${escapeHtml(est.nombre)}')"><i class="fa-solid fa-clipboard"></i></button>
+            <button class="btn-primary" style="padding:6px 10px;font-size:10px;background:#7A10C0" onclick="abrirModalObservacion('${est.id}','${escapeHtml(est.nombre)}')"><i class="fa-solid fa-clipboard"></i></button>
         </div>`;
     }).join('');
     document.getElementById('listaEstudiantes').innerHTML = html || '<div class="empty-message">No hay estudiantes</div>';
@@ -636,10 +636,10 @@ function renderizarTareasDocente() {
     document.getElementById('listaTareasDocente').innerHTML = filtradas.map(t => {
         const stats = TAREAS.getEstadisticasTarea(t.id);
         const estadoTarea = TAREAS.getEstadoTarea(t);
-        const estadoColor = estadoTarea === 'pendiente' ? '#f59e0b' : '#ef4444';
+        const estadoColor = estadoTarea === 'pendiente' ? '#D8A1FF' : '#B02B44';
         const estadoText = estadoTarea === 'pendiente' ? 'Activa' : 'Caducada';
 
-        return `<div class="tarea-card" style="border-left-color:${estadoTarea === 'pendiente' ? '#3b82f6' : '#ef4444'}">
+        return `<div class="tarea-card" style="border-left-color:${estadoTarea === 'pendiente' ? '#560591' : '#B02B44'}">
             <div style="flex:1;min-width:200px">
                 <div class="tarea-header">
                     <span class="tarea-titulo"><i class="fa-solid fa-tasks"></i> ${escapeHtml(t.titulo)}</span>
@@ -655,8 +655,8 @@ function renderizarTareasDocente() {
             </div>
             <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
                 <button class="btn-primary" style="padding:6px 12px;font-size:11px;background:#10b981" onclick="abrirEntregasTarea('${t.id}','${escapeHtml(t.titulo)}')"><i class="fa-solid fa-eye"></i> ${stats.total}</button>
-                <button class="btn-primary" style="padding:6px 12px;font-size:11px;background:#f59e0b" onclick="abrirEditarTarea('${t.id}')"><i class="fa-solid fa-pen"></i></button>
-                <button class="btn-primary" style="padding:6px 12px;font-size:11px;background:#ef4444" onclick="confirmarEliminarTarea('${t.id}')"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn-primary" style="padding:6px 12px;font-size:11px;background:#D8A1FF" onclick="abrirEditarTarea('${t.id}')"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-primary" style="padding:6px 12px;font-size:11px;background:#B02B44" onclick="confirmarEliminarTarea('${t.id}')"><i class="fa-solid fa-trash"></i></button>
             </div>
         </div>`;
     }).join('') || '<div class="empty-message"><i class="fa-solid fa-tasks"></i><p>No has creado tareas aún. ¡Crea tu primera tarea!</p></div>';
@@ -757,12 +757,12 @@ function abrirEntregasTarea(tareaId, tareaNombre) {
         ? '<div class="empty-message">No hay entregas aún</div>'
         : entregas.map(e => {
             const cal = e.calificacion != null;
-            return `<div class="tarea-card" style="border-left-color:${cal ? PERFILES.obtenerNotaColor(e.calificacion) : '#f59e0b'}">
+            return `<div class="tarea-card" style="border-left-color:${cal ? PERFILES.obtenerNotaColor(e.calificacion) : '#D8A1FF'}">
                 <div style="flex:1;min-width:150px">
                     <div class="tarea-titulo">${escapeHtml(e.estudianteNombre)}</div>
                     <div class="tarea-desc" style="font-size:12px">
                         <div>${escapeHtml(e.contenido || 'Sin contenido')}</div>
-                        ${e.archivos?.length ? `<div style="color:#6366f1;margin-top:4px"><i class="fa-solid fa-paperclip"></i> ${escapeHtml(e.archivos[0].nombre)}</div>` : ''}
+                        ${e.archivos?.length ? `<div style="color:#560591;margin-top:4px"><i class="fa-solid fa-paperclip"></i> ${escapeHtml(e.archivos[0].nombre)}</div>` : ''}
                     </div>
                     <div class="tarea-footer" style="font-size:11px">
                         <span><i class="fa-regular fa-calendar"></i> ${e.fechaEntrega} ${e.horaEntrega || ''}</span>
@@ -771,9 +771,9 @@ function abrirEntregasTarea(tareaId, tareaNombre) {
                 <div style="text-align:right;min-width:120px">
                     ${cal
                         ? `<div style="font-weight:700;font-size:1.2rem;color:${PERFILES.obtenerNotaColor(e.calificacion)}">${e.calificacion}%</div>
-                           <div style="font-size:11px;color:#64748b">${escapeHtml(e.retroalimentacion || '')}</div>`
+                           <div style="font-size:11px;color:#6B6B6C">${escapeHtml(e.retroalimentacion || '')}</div>`
                         : `<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-                            <input type="number" id="calNota_${e.id}" placeholder="Nota" min="0" max="100" style="width:70px;padding:6px 10px;border:1px solid #e2e8f0;border-radius:10px;text-align:center;font-size:12px">
+                            <input type="number" id="calNota_${e.id}" placeholder="Nota" min="0" max="100" style="width:70px;padding:6px 10px;border:1px solid #E8DDD0;border-radius:10px;text-align:center;font-size:12px">
                             <button class="btn-primary" style="padding:6px 12px;font-size:11px" onclick="calificarEntrega('${e.id}','${tareaId}','${escapeHtml(tareaNombre)}')"><i class="fa-solid fa-check"></i></button>
                           </div>`
                     }
@@ -831,7 +831,7 @@ function renderizarReportes() {
                     const { ctx: ctx2, chartArea } = c;
                     if (!chartArea) return promediosColors[context.dataIndex];
                     const grad = ctx2.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-                    const base = promediosColors[context.dataIndex] || '#6366f1';
+                    const base = promediosColors[context.dataIndex] || '#560591';
                     grad.addColorStop(0, base + '44');
                     grad.addColorStop(1, base);
                     return grad;
@@ -847,7 +847,7 @@ function renderizarReportes() {
             plugins: {
                 legend: { display: false },
                 tooltip: {
-                    backgroundColor: '#1e293b',
+                    backgroundColor: '#3E036E',
                     padding: 12,
                     cornerRadius: 8,
                     bodyFont: { size: 13, weight: '500' },
@@ -873,7 +873,7 @@ function renderizarReportes() {
         <div class="detalle-item"><i class="fa-solid fa-file-pen"></i> <strong>Evaluaciones:</strong> ${stats.totalEvaluaciones}</div>
         <div class="detalle-item"><i class="fa-solid fa-star"></i> <strong>Promedio General:</strong> <span style="color:${PERFILES.obtenerNotaColor(stats.promedioGeneral)}">${stats.promedioGeneral}%</span></div>
         <div class="detalle-item"><i class="fa-solid fa-check-circle" style="color:#10b981"></i> <strong>Aprobados:</strong> ${stats.aprobados}</div>
-        <div class="detalle-item"><i class="fa-solid fa-xmark-circle" style="color:#ef4444"></i> <strong>Reprobados:</strong> ${stats.reprobados}</div>
+        <div class="detalle-item"><i class="fa-solid fa-xmark-circle" style="color:#B02B44"></i> <strong>Reprobados:</strong> ${stats.reprobados}</div>
         <div class="detalle-item"><i class="fa-solid fa-chart-line"></i> <strong>Rendimiento:</strong> ${stats.rendimiento}%</div>
     `;
 
@@ -890,11 +890,11 @@ function renderizarReportes() {
         return `<div class="tarea-card" style="border-left-color:${PERFILES.obtenerNotaColor(prom)};cursor:pointer" onclick="abrirModalObservacion('${est.id}','${escapeHtml(est.nombre)}')">
             <div style="flex:1">
                 <div class="tarea-titulo">${escapeHtml(est.nombre)}</div>
-                <div style="font-size:12px;color:#64748b">${est.grado}-${est.seccion}</div>
+                <div style="font-size:12px;color:#6B6B6C">${est.grado}-${est.seccion}</div>
             </div>
             <div style="text-align:right">
                 <div style="font-weight:700;font-size:1.2rem;color:${PERFILES.obtenerNotaColor(prom)}">${prom}%</div>
-                <div style="font-size:11px;color:#64748b">${PERFILES.obtenerLetraNota(prom)}</div>
+                <div style="font-size:11px;color:#6B6B6C">${PERFILES.obtenerLetraNota(prom)}</div>
             </div>
         </div>`;
     }).join('');
