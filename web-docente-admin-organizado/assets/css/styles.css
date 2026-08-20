@@ -1182,8 +1182,8 @@
   border-radius: var(--radius-pill);
   font-weight: 600;
 }
-.chat-conv-nombre .chat-rol-docente { background: #dbeafe; color: #2563eb; }
-.chat-conv-nombre .chat-rol-estudiante { background: #dcfce7; color: #16a34a; }
+.chat-conv-nombre .chat-rol-docente { background: #F0E6F7; color: #560591; }
+.chat-conv-nombre .chat-rol-estudiante { background: #F0E6F7; color: #7A10C0; }
 .chat-conv-nombre .chat-silenciado { color: var(--text-tertiary); font-size: 0.7rem; }
 
 .chat-conv-ultimo {
@@ -1385,7 +1385,7 @@
 .chat-msg-estado { font-size: 0.65rem; }
 .chat-msg-estado.enviado { color: rgba(255,255,255,0.6); }
 .chat-msg-estado.entregado { color: rgba(255,255,255,0.7); }
-.chat-msg-estado.leido { color: #60a5fa; }
+.chat-msg-estado.leido { color: #D8A1FF; }
 .chat-msg-otro .chat-msg-estado.leido { color: var(--primary); }
 
 /* Reply inside message */
@@ -2184,7 +2184,7 @@
   gap: 8px;
   padding: 4px 0;
 }
-.chat-msg-ubicacion i { font-size: 1.2rem; color: #ef4444; }
+.chat-msg-ubicacion i { font-size: 1.2rem; color: #B02B44; }
 
 /* ==========================================================
    RESPONSIVE - MOBILE FIRST
