@@ -3,7 +3,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #1A1017 0%, #2E1A28 50%, #1F1420 100%);
+  background: linear-gradient(135deg, #1A0A30 0%, #2D0252 50%, #1F0E38 100%);
   padding: 16px;
   font-family: var(--font);
   position: relative;
@@ -96,12 +96,12 @@ body {
 }
 .input-group input::placeholder { color: rgba(255, 255, 255, 0.25); }
 .input-group input:focus {
-  border-color: rgba(122, 32, 89, 0.5);
+  border-color: rgba(86, 5, 145, 0.5);
   background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 3px rgba(122, 32, 89, 0.12);
+  box-shadow: 0 0 0 3px rgba(86, 5, 145, 0.12);
 }
 .input-group input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px #2E1A28 inset !important;
+  -webkit-box-shadow: 0 0 0 30px #2D0252 inset !important;
   -webkit-text-fill-color: white !important;
 }
 
@@ -154,7 +154,7 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
 }
 .btn-login:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(122, 32, 89, 0.35);
+  box-shadow: 0 8px 30px rgba(86, 5, 145, 0.35);
 }
 .btn-login:active { transform: translateY(0); }
 .btn-login:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
@@ -165,18 +165,18 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
 }
 .extra-links a {
   text-decoration: none;
-  color: rgba(122, 32, 89, 0.8);
+  color: rgba(86, 5, 145, 0.8);
   font-weight: 500;
   font-size: 0.875rem;
   transition: color var(--transition-fast);
 }
-.extra-links a:hover { color: rgba(122, 32, 89, 1); }
+.extra-links a:hover { color: rgba(86, 5, 145, 1); }
 .extra-links p {
   margin-top: 16px;
   color: rgba(255, 255, 255, 0.35);
   font-size: 0.85rem;
 }
-.extra-links p a { color: rgba(122, 32, 89, 0.9); }
+.extra-links p a { color: rgba(86, 5, 145, 0.9); }
 
 @media (max-width: 480px) {
   .login-card { padding: 32px 20px; }
