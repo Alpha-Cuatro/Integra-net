@@ -1152,7 +1152,7 @@
   height: 12px;
   border-radius: var(--radius-full);
   border: 2px solid var(--surface);
-  background: #22c55e;
+  background: #10b981;
 }
 .chat-conv-avatar .chat-avatar-grupo {
   width: 48px;
@@ -1306,7 +1306,7 @@
   height: 10px;
   border-radius: var(--radius-full);
   border: 2px solid var(--surface);
-  background: #22c55e;
+  background: #10b981;
 }
 
 .chat-conv-header-info { flex: 1; min-width: 0; cursor: pointer; }
