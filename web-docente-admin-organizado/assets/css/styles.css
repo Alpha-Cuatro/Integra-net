@@ -1,7 +1,7 @@
 /* ===== SIDEBAR ===== */
 .sidebar {
   width: var(--sidebar-width);
-  background: linear-gradient(180deg, #0f172a 0%, #1a2332 100%);
+  background: linear-gradient(180deg, #3E036E 0%, #2D0252 100%);
   color: white;
   position: fixed;
   left: calc(var(--sidebar-width) * -1);
@@ -51,7 +51,7 @@
 }
 .logo:hover img { transform: scale(1.05); }
 .logo h2 {
-  color: #F7ECF2;
+  color: #F0E6F7;
   font-size: clamp(1.1rem, 2.5vw, 1.25rem);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -74,7 +74,7 @@
 }
 .menu a {
   text-decoration: none;
-  color: #64748b;
+  color: #B8B8B9;
   padding: 10px 14px;
   border-radius: var(--radius-md);
   display: flex;
@@ -94,12 +94,12 @@
 }
 .menu a:hover {
   background: rgba(255, 255, 255, 0.06);
-  color: #cbd5e1;
+  color: #E8DDD0;
 }
 .menu a.active {
   background: var(--primary-gradient);
   color: white;
-  box-shadow: 0 4px 16px rgba(122, 32, 89, 0.3);
+  box-shadow: 0 4px 16px rgba(86, 5, 145, 0.3);
   font-weight: 600;
 }
 .menu a .notif-badge {
@@ -121,11 +121,11 @@
   align-items: center;
   gap: 10px;
   padding: 12px 16px;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.15);
+  background: rgba(176, 43, 68, 0.1);
+  border: 1px solid rgba(176, 43, 68, 0.15);
   border-radius: var(--radius-md);
   cursor: pointer;
-  color: #fca5a5;
+  color: #F2D4DA;
   font-weight: 600;
   width: 100%;
   font-size: 0.875rem;
@@ -133,8 +133,8 @@
 }
 .cerrar-sesion-btn:hover,
 .btn-cerrar-sesion:hover {
-  background: rgba(239, 68, 68, 0.2);
-  color: #fecaca;
+  background: rgba(176, 43, 68, 0.2);
+  color: #F8ECF0;
   transform: translateY(-1px);
 }
 .cerrar-sesion-btn:active,
@@ -332,7 +332,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, transparent 50%, rgba(99,102,241,0.02));
+  background: linear-gradient(135deg, transparent 50%, rgba(86,5,145,0.02));
   pointer-events: none;
 }
 .card-resumen:hover {
@@ -850,7 +850,7 @@
   margin: 0 auto;
 }
 .perfil-portada {
-  background: linear-gradient(135deg, #7A2059, #9B3B7A, #E2673C);
+  background: linear-gradient(135deg, #560591, #D8A1FF, #B02B44);
   height: clamp(110px, 15vw, 140px);
   position: relative;
 }
@@ -959,7 +959,7 @@
   width: 100%;
   height: calc(var(--bottom-nav-height) + var(--safe-area-bottom));
   padding-bottom: var(--safe-area-bottom);
-  background: #0f172a;
+  background: #3E036E;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -971,7 +971,7 @@
 
 .bottom-nav a {
   text-decoration: none;
-  color: #475569;
+  color: #B8B8B9;
   font-size: 0.65rem;
   display: flex;
   flex-direction: column;
@@ -986,8 +986,8 @@
 }
 .bottom-nav a i { font-size: clamp(1.15rem, 2.5vw, 1.35rem); }
 .bottom-nav a span { font-size: 0.6rem; font-weight: 500; }
-.bottom-nav a.active { color: #C23B70; }
-.bottom-nav a:hover { color: #a5b4fc; }
+.bottom-nav a.active { color: #D8A1FF; }
+.bottom-nav a:hover { color: #F0E1FF; }
 .bottom-nav a .notif-badge {
   position: absolute;
   top: 2px;
@@ -1355,7 +1355,7 @@
   background: var(--primary-gradient);
   color: white;
   border-bottom-right-radius: 4px;
-  box-shadow: 0 1px 4px rgba(122, 32, 89, 0.15);
+  box-shadow: 0 1px 4px rgba(86, 5, 145, 0.15);
 }
 
 .chat-msg-otro .chat-msg-burbuja {
@@ -1647,15 +1647,15 @@
   font-size: 1rem;
   transition: all var(--transition-fast);
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(122, 32, 89, 0.25);
+  box-shadow: 0 2px 8px rgba(86, 5, 145, 0.25);
 }
 .chat-btn-send:hover {
   transform: scale(1.08);
-  box-shadow: 0 4px 16px rgba(122, 32, 89, 0.35);
+  box-shadow: 0 4px 16px rgba(86, 5, 145, 0.35);
 }
 .chat-btn-send:active { transform: scale(0.92); }
 .chat-btn-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
-.chat-btn-send.has-content { opacity: 1; box-shadow: 0 2px 8px rgba(122, 32, 89, 0.3); }
+.chat-btn-send.has-content { opacity: 1; box-shadow: 0 2px 8px rgba(86, 5, 145, 0.3); }
 
 /* Context Menu */
 .chat-context-menu {
@@ -2347,14 +2347,14 @@
 
 @media (prefers-color-scheme: dark) and (min-width: 769px) {
   .topbar {
-    background: rgba(15, 23, 42, 0.85);
+    background: rgba(45, 2, 82, 0.85);
     backdrop-filter: blur(16px) saturate(180%);
   }
 }
 
 /* Data-theme dark overrides for topbar */
 [data-theme="dark"] .topbar {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(45, 2, 82, 0.85);
   backdrop-filter: blur(16px) saturate(180%);
 }
 [data-theme="light"] .topbar {
