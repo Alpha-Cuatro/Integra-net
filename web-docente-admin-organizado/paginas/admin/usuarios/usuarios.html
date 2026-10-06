@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tareas · Panel de Control</title>
+    <title>Usuarios · Panel de Control</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,10 +29,10 @@
                 <button type="button" class="admin-nav-btn" data-admin-nav="../dashboard/dashboard.html">
                     <i class="fa-solid fa-gauge-high"></i> Resumen
                 </button>
-                <button type="button" class="admin-nav-btn is-active" data-admin-nav="tareas.html">
+                <button type="button" class="admin-nav-btn" data-admin-nav="../tareas/tareas.html">
                     <i class="fa-solid fa-list-check"></i> Tareas
                 </button>
-                <button type="button" class="admin-nav-btn" data-admin-nav="../usuarios/usuarios.html">
+                <button type="button" class="admin-nav-btn is-active" data-admin-nav="usuarios.html">
                     <i class="fa-solid fa-users"></i> Usuarios
                 </button>
                 <button type="button" class="admin-nav-btn" id="btnCerrarSesion">
@@ -44,32 +44,27 @@
 
     <main class="container">
         <div class="admin-header">
-            <h2 class="admin-title">Tareas registradas</h2>
-            <p class="admin-subtitle">Tareas creadas por el docente y entregas enviadas por el alumnado</p>
+            <h2 class="admin-title">Usuarios del sistema</h2>
+            <p class="admin-subtitle">Docentes, administradores y estudiantes registrados</p>
         </div>
 
         <div class="filtros">
-            <input type="search" id="buscarTarea" placeholder="Buscar por título o materia…" aria-label="Buscar tarea">
-            <select id="filtroEstado" aria-label="Filtrar por estado">
-                <option value="">Todos los estados</option>
-                <option value="Pendiente">Pendiente</option>
-                <option value="Entregada">Entregada</option>
-                <option value="Completada">Completada</option>
+            <input type="search" id="buscarUsuario" placeholder="Buscar por nombre o correo…" aria-label="Buscar usuario">
+            <select id="filtroRol" aria-label="Filtrar por rol">
+                <option value="">Todos los roles</option>
+                <option value="admin">Administrador</option>
+                <option value="docente">Docente</option>
+                <option value="estudiante">Estudiante</option>
             </select>
         </div>
 
-        <div id="tabla-tareas"></div>
-
-        <div class="card">
-            <div class="card-header"><i class="fa-solid fa-inbox"></i> Entregas recibidas</div>
-            <div id="tabla-entregas"></div>
-        </div>
+        <div id="tabla-usuarios"></div>
     </main>
 
     <script src="../../../assets/js/auth.js"></script>
     <script src="../../../assets/js/perfil/datosIniciales.js"></script>
     <script src="../table.js"></script>
-    <script src="tareas.js"></script>
+    <script src="usuarios.js"></script>
     <script>
         document.getElementById('btnCerrarSesion').addEventListener('click', () => {
             localStorage.removeItem('eduSesion');

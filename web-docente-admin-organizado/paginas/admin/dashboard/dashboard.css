@@ -1,25 +1,259 @@
-#stats-container .row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+/* Estilos del panel de administración.
+   Reutiliza los tokens de ../../assets/css/design.css */
+
+/* Estructura base. Estas clases no venian definidas en ningun hoja del
+   proyecto, por lo que el panel anterior se renderizaba sin estructura. */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
 }
-#stats-container .col {
-  flex: 1;
-  min-width: 140px;
-  background: var(--bg);
-  padding: 20px;
-  border-radius: var(--radius-md);
-  text-align: center;
-  font-size: 0.9rem;
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.col {
+  min-width: 0;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 18px;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
   color: var(--text-secondary);
-  border: 1px solid var(--border-light);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-body {
+  padding: 18px;
+}
+
+.admin-body {
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+.admin-topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.admin-topbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-marca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-marca img {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+}
+
+.admin-marca strong {
+  display: block;
+  color: var(--text-primary);
+  font-size: 1.05rem;
+}
+
+.admin-marca span {
+  display: block;
+  color: var(--text-tertiary);
+  font-size: 0.78rem;
+}
+
+.admin-nav {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.admin-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-family: var(--font);
+  font-size: 0.83rem;
+  font-weight: 600;
+  cursor: pointer;
   transition: all var(--transition-fast);
 }
-#stats-container .col:hover {
-  border-color: var(--border);
+
+.admin-nav-btn:hover {
+  background: var(--bg-alt);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.admin-nav-btn.is-active {
+  background: var(--primary-gradient);
+  color: var(--text-inverse);
+  border-color: var(--primary);
+}
+
+.admin-subtitle {
+  color: var(--text-tertiary);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+/* Rejilla de tarjetas de resumen */
+#stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat-icon {
+  color: var(--primary);
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+.stat-valor {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Listas dentro de las tarjetas */
+.lista-panel {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lista-panel li {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.lista-panel li:last-child {
+  border-bottom: none;
+}
+
+.lista-titulo {
+  display: block;
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.lista-meta {
+  display: block;
+  color: var(--text-tertiary);
+  font-size: 0.76rem;
+  margin-top: 2px;
+}
+
+.vacio {
+  color: var(--text-tertiary);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin: 4px 0;
+}
+
+.entregas-total {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.entregas-total strong {
+  color: var(--primary);
+  font-size: 1.4rem;
+}
+
+.filtros {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.filtros input,
+.filtros select {
+  padding: 9px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 0.86rem;
+}
+
+.filtros input:focus,
+.filtros select:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
 }
 
 @media (max-width: 768px) {
-  #stats-container .col { min-width: calc(50% - 16px); }
+  .admin-topbar-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-nav {
+    justify-content: center;
+  }
 }

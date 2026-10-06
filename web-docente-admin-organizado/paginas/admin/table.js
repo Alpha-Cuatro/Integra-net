@@ -26,6 +26,11 @@ class TableGenerator {
         thead.appendChild(headerRow);
         table.appendChild(thead);
         
+        if (!Array.isArray(data) || data.length === 0) {
+            container.innerHTML = `<p class="vacio">${options.emptyMessage || 'No hay registros para mostrar.'}</p>`;
+            return null;
+        }
+        
         const tbody = document.createElement('tbody');
         
         data.forEach((item, index) => {
