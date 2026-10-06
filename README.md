@@ -141,21 +141,27 @@ No hay build ni dependencias que instalar.
    ```
    Con VS Code, usar la extensión **Live Server** sobre la raíz del repositorio.
 
-3. **Abrir la aplicación.** Ambas aplicaciones son accesibles por separado:
-   - Estudiante: <http://localhost:5500/movil-estudiante/auth/login.html>
-   - Docente: <http://localhost:5500/web-docente-admin-organizado/paginas/auth/login.html>
-   - Administrador: misma URL de login que el docente.
+3. **Abrir la aplicación.** Hay dos portales independientes, y cada uno tiene su
+   propia pantalla de login:
+
+   | Portal | URL | Roles que admiten |
+   |---|---|---|
+   | App del estudiante | `/movil-estudiante/auth/login.html` | Estudiante |
+   | App web | `/web-docente-admin-organizado/paginas/auth/login.html` | Docente y Administrador |
 
 4. **Iniciar sesión** con una de las cuentas de la tabla siguiente. Los datos
-   semilla se generan sola la primera vez que se abre la aplicación.
+   semilla se generan solos la primera vez que se abre la aplicación.
 
 ### Cuentas de demostración
 
-| Rol | Correo | Contraseña |
-|---|---|---|
-| Administrador | `admin@colegio.edu` | `Admin@2026` |
-| Docente | `manuel.antonio@colegio.edu` | `Manuel@2026` |
-| Estudiante | `juan.carlos@colegio.edu` | `JuanCarlos@2026` |
+| Rol | Correo | Contraseña | Entrar en |
+|---|---|---|---|
+| **Estudiante (alumno)** | `juan.carlos@colegio.edu` | `JuanCarlos@2026` | App del estudiante |
+| **Docente** | `manuel.antonio@colegio.edu` | `Manuel@2026` | App web |
+| **Administrador** | `admin@colegio.edu` | `Admin@2026` | App web |
+
+> El estudiante entra en el portal móvil y el docente en el web: son
+> aplicaciones separadas, con su propio login y su propio guard de rutas.
 
 El registro permite crear cuentas nuevas de **docente y administrador** desde la
 aplicación web, y de **estudiante** desde la aplicación móvil.
