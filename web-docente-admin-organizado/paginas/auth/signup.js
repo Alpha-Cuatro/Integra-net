@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ===== DOM REFS =====
   const rolSelect = document.getElementById('rol');
-  const camposEstudiante = document.getElementById('camposEstudiante');
+  const camposAdmin = document.getElementById('camposAdmin');
   const camposDocente = document.getElementById('camposDocente');
   const form = document.getElementById('signupForm');
   const btnRegistro = document.getElementById('btnRegistro');
@@ -162,18 +162,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const VALIDATORS = {
-    estNombre: (v) => validateName(v),
+    admNombre: (v) => validateName(v),
     docNombre: (v) => validateName(v),
-    estCorreo: (v) => validateEmail(v),
+    admCorreo: (v) => validateEmail(v),
     docCorreo: (v) => validateEmail(v),
-    estPassword: (v) => validatePassword(v),
+    admPassword: (v) => validatePassword(v),
     docPassword: (v) => validatePassword(v),
-    estInstituto: (v) => validateRequired(v, 'El centro educativo'),
+    admInstituto: (v) => validateRequired(v, 'El centro educativo'),
     docInstituto: (v) => validateRequired(v, 'El centro educativo'),
     docEspecialidad: (v) => validateRequired(v, 'La especialidad'),
     docMateria: (v) => v ? '' : 'Selecciona una materia.',
-    estGrado: (v) => v ? '' : 'Selecciona un grado.',
-    estSeccion: (v) => v ? '' : 'Selecciona una sección.',
   };
 
   function validateField(input) {
@@ -274,13 +272,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== ROLE HANDLING =====
   function actualizarCampos() {
     const rol = rolSelect.value;
-    camposDirector.style.display = rol === 'director' ? 'block' : 'none';
+    camposAdmin.style.display = rol === 'admin' ? 'block' : 'none';
     camposDocente.style.display = rol === 'docente' ? 'block' : 'none';
     clearAllErrors();
     document.querySelectorAll('.campos-rol input, .campos-rol select').forEach(el => el.required = false);
-    if (rol === 'director') {
-      camposDirector.querySelectorAll('input, select').forEach(el => {
-        if (el.id !== 'estFechaNac' && el.id !== 'estSexo' && el.id !== 'estTelefono' && el.id !== 'estDireccion' && el.id !== 'estTutor') el.required = true;
+    if (rol === 'admin') {
+      camposAdmin.querySelectorAll('input, select').forEach(el => {
+        if (el.id !== 'admTelefono' && el.id !== 'admDireccion') el.required = true;
       });
     } else if (rol === 'docente') {
       camposDocente.querySelectorAll('input, select').forEach(el => {
@@ -497,23 +495,18 @@ document.addEventListener('DOMContentLoaded', () => {
     setLoading(true);
 
     let nombre, correo, password, instituto, extra;
-    if (rol === 'estudiante') {
-      nombre = sanitizeName(document.getElementById('estNombre').value);
-      correo = document.getElementById('estCorreo').value.trim().toLowerCase();
-      password = document.getElementById('estPassword').value;
-      instituto = sanitizeText(document.getElementById('estInstituto').value);
+    if (rol === 'admin') {
+      nombre = sanitizeName(document.getElementById('admNombre').value);
+      correo = document.getElementById('admCorreo').value.trim().toLowerCase();
+      password = document.getElementById('admPassword').value;
+      instituto = sanitizeText(document.getElementById('admInstituto').value);
       if (!nombre || !correo || !password || !instituto) {
         setLoading(false);
-        return mostrarModal({ titulo: 'Campos incompletos', mensaje: 'Completa todos los campos requeridos del estudiante.', icono: 'fa-solid fa-triangle-exclamation', tipo: 'error' });
+        return mostrarModal({ titulo: 'Campos incompletos', mensaje: 'Completa todos los campos requeridos del administrador.', icono: 'fa-solid fa-triangle-exclamation', tipo: 'error' });
       }
       extra = {
-        fechaNacimiento: document.getElementById('estFechaNac').value,
-        sexo: document.getElementById('estSexo').value,
-        grado: document.getElementById('estGrado').value,
-        seccion: document.getElementById('estSeccion').value,
-        tutor: sanitizeText(document.getElementById('estTutor').value),
-        telefono: sanitizeText(document.getElementById('estTelefono').value),
-        direccion: sanitizeText(document.getElementById('estDireccion').value)
+        telefono: sanitizeText(document.getElementById('admTelefono').value),
+        direccion: sanitizeText(document.getElementById('admDireccion').value)
       };
     } else {
       nombre = sanitizeName(document.getElementById('docNombre').value);
@@ -560,17 +553,10 @@ document.addEventListener('DOMContentLoaded', () => {
         fechaRegistro: new Date().toLocaleDateString(),
         telefono: extra.telefono || '',
         direccion: extra.direccion || '',
-        ...(rol === 'estudiante' ? {
-          codigo: 'EST-' + Date.now().toString().slice(-6),
-          fechaNacimiento: extra.fechaNacimiento || '',
-          sexo: extra.sexo || '',
-          grado: extra.grado || '',
-          seccion: extra.seccion || '',
-          tutor: extra.tutor || '',
-          estadoAcademico: 'Activo',
-          materias: [], asistencias: [], observaciones: [],
-          competenciasGlobales: [], fortalezas: [], debilidades: [],
-          grupos: [], promedioGeneral: 0
+        ...(rol === 'admin' ? {
+          cargo: 'Administrador',
+          estado: 'Activo',
+          fechaIngreso: new Date().toISOString().split('T')[0]
         } : {
           codigoDocente: 'DOC-' + Date.now().toString().slice(-6),
           especialidad: extra.especialidad || '',
@@ -600,10 +586,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ===== INIT =====
-  setupAutocomplete('estInstituto', 'estListaInstitutos');
+  setupAutocomplete('admInstituto', 'admListaInstitutos');
   setupAutocomplete('docInstituto', 'docListaInstitutos');
   setupFieldValidation();
-  setupPasswordStrength('estPassword');
+  setupPasswordStrength('admPassword');
   setupPasswordStrength('docPassword');
   actualizarCampos();
 });

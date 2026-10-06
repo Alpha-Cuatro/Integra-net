@@ -27,44 +27,44 @@
                     <label for="rol" class="sr-only">Selecciona tu rol</label>
                     <select id="rol" aria-required="true" aria-label="Rol">
                         <option value="">Seleccione un rol</option>
-                        <option value="director">Director</option>
+                        <option value="admin">Administrador</option>
                         <option value="docente">Docente</option>
                     </select>
                 </div>
 
-                <div id="camposDirector" class="campos-rol" style="display:none" role="region" aria-label="Campos para director">
+                <div id="camposAdmin" class="campos-rol" style="display:none" role="region" aria-label="Campos para administrador">
                     <div class="input-group">
                         <i class="fa-solid fa-user icon-left" aria-hidden="true"></i>
-                        <label for="dirNombre" class="sr-only">Nombre completo</label>
-                        <input type="text" id="dirNombre" placeholder="Nombre completo" autocomplete="name" maxlength="100" aria-label="Nombre completo" aria-required="true">
+                        <label for="admNombre" class="sr-only">Nombre completo</label>
+                        <input type="text" id="admNombre" placeholder="Nombre completo" autocomplete="name" maxlength="100" aria-label="Nombre completo" aria-required="true">
                     </div>
                     <div class="input-group">
                         <i class="fa-solid fa-envelope icon-left" aria-hidden="true"></i>
-                        <label for="dirCorreo" class="sr-only">Correo electrónico</label>
-                        <input type="email" id="dirCorreo" placeholder="Correo electrónico" inputmode="email" autocomplete="email" maxlength="255" aria-label="Correo electrónico" aria-required="true">
+                        <label for="admCorreo" class="sr-only">Correo electrónico</label>
+                        <input type="email" id="admCorreo" placeholder="Correo electrónico" inputmode="email" autocomplete="email" maxlength="255" aria-label="Correo electrónico" aria-required="true">
                     </div>
                     <div class="input-group">
                         <i class="fa-solid fa-lock icon-left" aria-hidden="true"></i>
-                        <label for="dirPassword" class="sr-only">Contraseña</label>
-                        <input type="password" id="dirPassword" placeholder="Contraseña" autocomplete="new-password" maxlength="128" aria-label="Contraseña" aria-required="true">
-                        <button type="button" class="toggle-password" data-target="dirPassword" tabindex="-1" aria-label="Mostrar u ocultar contraseña"><i class="fa-solid fa-eye"></i></button>
+                        <label for="admPassword" class="sr-only">Contraseña</label>
+                        <input type="password" id="admPassword" placeholder="Contraseña" autocomplete="new-password" maxlength="128" aria-label="Contraseña" aria-required="true">
+                        <button type="button" class="toggle-password" data-target="admPassword" tabindex="-1" aria-label="Mostrar u ocultar contraseña"><i class="fa-solid fa-eye"></i></button>
                     </div>
                   
                     <div class="input-group">
                         <i class="fa-solid fa-phone icon-left" aria-hidden="true"></i>
-                        <label for="estTelefono" class="sr-only">Teléfono</label>
-                        <input type="tel" id="estTelefono" placeholder="Teléfono" inputmode="tel" autocomplete="tel" maxlength="20" aria-label="Teléfono">
+                        <label for="admTelefono" class="sr-only">Teléfono</label>
+                        <input type="tel" id="admTelefono" placeholder="Teléfono" inputmode="tel" autocomplete="tel" maxlength="20" aria-label="Teléfono">
                     </div>
                     <div class="input-group">
                         <i class="fa-solid fa-location-dot icon-left" aria-hidden="true"></i>
-                        <label for="estDireccion" class="sr-only">Dirección</label>
-                        <input type="text" id="estDireccion" placeholder="Dirección" autocomplete="street-address" maxlength="200" aria-label="Dirección">
+                        <label for="admDireccion" class="sr-only">Dirección</label>
+                        <input type="text" id="admDireccion" placeholder="Dirección" autocomplete="street-address" maxlength="200" aria-label="Dirección">
                     </div>
                     <div class="input-group autocomplete">
                         <i class="fa-solid fa-school icon-left" aria-hidden="true"></i>
-                        <label for="estInstituto" class="sr-only">Tu centro educativo</label>
-                        <input type="text" id="estInstituto" placeholder="Tu centro educativo" autocomplete="off" maxlength="120" aria-label="Tu centro educativo" aria-required="true" role="combobox" aria-expanded="false" aria-controls="estListaInstitutos" aria-autocomplete="list">
-                        <div id="estListaInstitutos" class="autocomplete-list" role="listbox"></div>
+                        <label for="admInstituto" class="sr-only">Tu centro educativo</label>
+                        <input type="text" id="admInstituto" placeholder="Tu centro educativo" autocomplete="off" maxlength="120" aria-label="Tu centro educativo" aria-required="true" role="combobox" aria-expanded="false" aria-controls="admListaInstitutos" aria-autocomplete="list">
+                        <div id="admListaInstitutos" class="autocomplete-list" role="listbox"></div>
                     </div>
                 </div>
 

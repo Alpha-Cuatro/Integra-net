@@ -97,14 +97,20 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const correo = document.getElementById('recuperarEmail').value.trim();
         if (!correo) return;
-        const usuarios = JSON.parse(localStorage.getItem('eduUsuarios')) || [];
+const usuarios = JSON.parse(localStorage.getItem('eduUsuarios')) || [];
         const usuario = usuarios.find(u => u.correo.toLowerCase() === correo.toLowerCase());
         document.getElementById('recuperarOverlay').style.display = 'none';
-        if (usuario) {
-            mostrarModal({ titulo: 'Recuperación exitosa', mensaje: `Tu contraseña es: ${usuario.password}\nTe recomendamos cambiarla después de iniciar sesión.`, icono: 'fa-solid fa-envelope', tipo: 'success' });
-        } else {
-            mostrarModal({ titulo: 'Correo no encontrado', mensaje: 'No encontramos una cuenta con ese correo.', icono: 'fa-solid fa-triangle-exclamation', tipo: 'error' });
-        }
         document.getElementById('recuperarEmail').value = '';
+        // Por prototipo las contrasenas se guardan en texto plano, asi que no se
+        // pueden verificar contra un hash. Se confirma la cuenta sin revelar la
+        // contrasena; el restablecimiento real lo haria un backend.
+        mostrarModal({
+            titulo: usuario ? 'Cuenta encontrada' : 'Correo no encontrado',
+            mensaje: usuario
+                ? 'Si esa cuenta existe, el restablecimiento de contrasena se enviara al correo registrado.'
+                : 'No encontramos ninguna cuenta con ese correo.',
+            icono: usuario ? 'fa-solid fa-envelope-circle-check' : 'fa-solid fa-triangle-exclamation',
+            tipo: usuario ? 'success' : 'error'
+        });
     });
 });

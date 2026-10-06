@@ -27,14 +27,14 @@ const GRADOS_SECCIONES = {
 };
 
 const MATERIAS_SECUNDARIA = [
-    { id: 'mat01', nombre: 'Derechos de la Mujer: Fundamentos' },
-    { id: 'mat02', nombre: 'Prevención de la Violencia de Género' },
-    { id: 'mat03', nombre: 'Equidad de Género' },
-    { id: 'mat04', nombre: 'Autoestima y Empoderamiento' },
-    { id: 'mat05', nombre: 'Comunicación Asertiva y Resolución de Conflictos' },
-    { id: 'mat06', nombre: 'Corresponsabilidad y Roles de Género' },
-    { id: 'mat07', nombre: 'Salud y Bienestar Integral' },
-    { id: 'mat08', nombre: 'Ciudadanía, Participación y Liderazgo' }
+    { id: 'mat01', nombre: 'Derechos de la Mujer: Fundamentos', horario: 'Lun/Mié 8-9am' },
+    { id: 'mat02', nombre: 'Prevención de la Violencia de Género', horario: 'Mar/Jue 8-9am' },
+    { id: 'mat03', nombre: 'Equidad de Género', horario: 'Lun/Mié 9-10am' },
+    { id: 'mat04', nombre: 'Autoestima y Empoderamiento', horario: 'Mar/Jue 9-10am' },
+    { id: 'mat05', nombre: 'Comunicación Asertiva y Resolución de Conflictos', horario: 'Lun/Mié 10-11am' },
+    { id: 'mat06', nombre: 'Corresponsabilidad y Roles de Género', horario: 'Mar/Jue 10-11am' },
+    { id: 'mat07', nombre: 'Salud y Bienestar Integral', horario: 'Vie 8-10am' },
+    { id: 'mat08', nombre: 'Ciudadanía, Participación y Liderazgo', horario: 'Vie 10-12am' }
 ];
 
 function getCompromisosByMateria(materiaId) {
@@ -98,7 +98,24 @@ function inicializarDatosSiEsNecesario() {
 
     const docenteId = 1001;
     const estudianteId = 2001;
+    const adminId = 1002;
     const ahora = new Date().toISOString();
+
+    const admin = {
+        id: adminId,
+        nombre: 'Ana Regina Woods',
+        correo: 'admin@colegio.edu',
+        password: 'Admin@2026',
+        rol: 'admin',
+        fotografia: '',
+        cargo: 'Administrador',
+        telefono: '+505 8888-0000',
+        direccion: 'Oficina central, Colegio San José',
+        estado: 'Activo',
+        instituto: 'Colegio San José',
+        fechaIngreso: '2024-01-01',
+        fechaRegistro: '2024-01-01'
+    };
 
     const docente = {
         id: docenteId,
@@ -108,7 +125,7 @@ function inicializarDatosSiEsNecesario() {
         rol: 'docente',
         fotografia: '',
         codigoDocente: 'DOC-2026-001',
-        especialidad: 'Matemáticas',
+        especialidad: 'Derechos y Dignidad de la Mujer',
         direccion: 'Colonia San Miguel, Calle Principal #123',
         telefono: '+505 8888-7777',
         estado: 'Activo',
@@ -120,7 +137,7 @@ function inicializarDatosSiEsNecesario() {
     const docenteMateria = {
         docenteId: docenteId,
         materiaId: 'mat01',
-        materiaNombre: 'Matemáticas',
+        materiaNombre: MATERIAS_SECUNDARIA[0].nombre,
         gradosSecciones: {}
     };
 
@@ -211,7 +228,7 @@ function inicializarDatosSiEsNecesario() {
     });
 
     const allEstudiantes = [estudiante, ...estudiantesPorGrupo];
-    const allUsuarios = [docente, ...allEstudiantes];
+    const allUsuarios = [docente, admin, ...allEstudiantes];
 
     const todasLasMaterias = {};
     MATERIAS_SECUNDARIA.forEach(m => { todasLasMaterias[m.id] = m; });
@@ -229,7 +246,7 @@ function inicializarDatosSiEsNecesario() {
                 materiaNombre: m.nombre,
                 docenteId: docenteId,
                 docenteNombre: 'Manuel Antonio',
-                horario: `${m.nombre === 'Matemáticas' ? 'Lun/Mié 8-9am' : m.nombre === 'Español' ? 'Mar/Jue 8-9am' : m.nombre === 'Ciencias Naturales' ? 'Lun/Mié 9-10am' : m.nombre === 'Ciencias Sociales' ? 'Mar/Jue 9-10am' : m.nombre === 'Inglés' ? 'Lun/Mié 10-11am' : m.nombre === 'Informática' ? 'Mar/Jue 10-11am' : m.nombre === 'Educación Física' ? 'Vie 8-10am' : 'Vie 10-12am'}`,
+                horario: m.horario,
                 grado: est.grado,
                 seccion: est.seccion,
                 evaluaciones: evaluciones,
