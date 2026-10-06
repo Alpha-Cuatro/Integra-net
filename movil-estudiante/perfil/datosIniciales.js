@@ -323,7 +323,23 @@ function inicializarDatosSiEsNecesario() {
     const entregas = JSON.parse(localStorage.getItem('eduEntregas')) || [];
     const notificaciones = JSON.parse(localStorage.getItem('eduNotificaciones')) || [];
 
-    localStorage.setItem('eduUsuarios', JSON.stringify(allUsuarios));
+    const usuariosExistentes = (() => {
+        try {
+            const prev = JSON.parse(localStorage.getItem('eduUsuarios'));
+            return Array.isArray(prev) ? prev : [];
+        } catch (e) {
+            return [];
+        }
+    })();
+    const correosRegistrados = new Set(
+        usuariosExistentes
+            .filter(u => u && u.correo)
+            .map(u => String(u.correo).trim().toLowerCase())
+    );
+    const usuariosSemillaNuevos = allUsuarios.filter(
+        u => u && u.correo && !correosRegistrados.has(String(u.correo).trim().toLowerCase())
+    );
+    localStorage.setItem('eduUsuarios', JSON.stringify([...usuariosExistentes, ...usuariosSemillaNuevos]));
     localStorage.setItem('eduDocente', JSON.stringify(docente));
     localStorage.setItem('eduDocenteMateria', JSON.stringify(docenteMateria));
     localStorage.setItem('eduEstudiantes', JSON.stringify(allEstudiantes));
