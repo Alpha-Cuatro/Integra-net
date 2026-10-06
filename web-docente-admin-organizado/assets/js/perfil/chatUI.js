@@ -280,7 +280,7 @@ const chatUI = {
 
         if (eliminado) {
             return `<div class="chat-msg ${esMio ? 'chat-msg-propio' : 'chat-msg-otro'}">
-                <div class="chat-msg-burbuja" style="background:${esMio ? 'rgba(99,102,241,0.3)' : 'var(--bg-alt)'};font-style:italic;opacity:0.6">
+                <div class="chat-msg-burbuja" style="background:${esMio ? 'rgba(86,5,145,0.3)' : 'var(--bg-alt)'};font-style:italic;opacity:0.6">
                     <span style="font-size:0.8rem">Este mensaje fue eliminado</span>
                 </div>
             </div>`;
@@ -291,7 +291,7 @@ const chatUI = {
         }
 
         const estadoIcono = m.estado === 'leido' ? 'fa-check-double' : m.estado === 'entregado' ? 'fa-check-double' : 'fa-check';
-        const estadoColor = m.estado === 'leido' ? '#60a5fa' : m.estado === 'entregado' ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.6)';
+        const estadoColor = m.estado === 'leido' ? '#D8A1FF' : m.estado === 'entregado' ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.6)';
         const estadoClass = m.estado || 'enviado';
 
         let contenidoHtml = '';
@@ -310,9 +310,9 @@ const chatUI = {
                     m.contenido?.archivo?.nombre?.match(/\.(doc|docx)$/i) ? 'fa-file-word' :
                     m.contenido?.archivo?.nombre?.match(/\.(xls|xlsx)$/i) ? 'fa-file-excel' :
                     m.contenido?.archivo?.nombre?.match(/\.(zip|rar)$/i) ? 'fa-file-zipper' : 'fa-file';
-                const docColor = m.contenido?.archivo?.nombre?.match(/\.pdf$/i) ? '#ef4444' :
-                    m.contenido?.archivo?.nombre?.match(/\.(doc|docx)$/i) ? '#3b82f6' :
-                    m.contenido?.archivo?.nombre?.match(/\.(xls|xlsx)$/i) ? '#10b981' : '#6366f1';
+                const docColor = m.contenido?.archivo?.nombre?.match(/\.pdf$/i) ? '#B02B44' :
+                    m.contenido?.archivo?.nombre?.match(/\.(doc|docx)$/i) ? '#560591' :
+                    m.contenido?.archivo?.nombre?.match(/\.(xls|xlsx)$/i) ? '#10b981' : '#7A10C0';
                 contenidoHtml = `<div class="chat-msg-archivo">
                     <div class="archivo-icono" style="background:${docColor}15;color:${docColor}"><i class="fa-solid ${docIcon}"></i></div>
                     <div class="archivo-info">
@@ -328,10 +328,10 @@ const chatUI = {
                 contenidoHtml = `<div class="chat-msg-ubicacion"><i class="fa-solid fa-location-dot"></i><span>${PERFILES.escapeHtml(m.contenido?.ubicacion?.nombre || 'Ubicación')}</span></div>`;
                 break;
             case 'contacto':
-                contenidoHtml = `<div class="chat-msg-archivo"><div class="archivo-icono" style="background:#dbeafe;color:#3b82f6"><i class="fa-solid fa-user"></i></div><div><div class="archivo-nombre">${PERFILES.escapeHtml(m.contenido?.contacto?.nombre || '')}</div></div></div>`;
+                contenidoHtml = `<div class="chat-msg-archivo"><div class="archivo-icono" style="background:#F0E6F7;color:#560591"><i class="fa-solid fa-user"></i></div><div><div class="archivo-nombre">${PERFILES.escapeHtml(m.contenido?.contacto?.nombre || '')}</div></div></div>`;
                 break;
             case 'audio':
-                contenidoHtml = `<div class="chat-msg-archivo"><div class="archivo-icono" style="background:#fce7f3;color:#ec4899"><i class="fa-solid fa-headphones"></i></div><div><div class="archivo-nombre">🎵 Audio</div></div></div>`;
+                contenidoHtml = `<div class="chat-msg-archivo"><div class="archivo-icono" style="background:#F0E6F7;color:#B02B44"><i class="fa-solid fa-headphones"></i></div><div><div class="archivo-nombre">🎵 Audio</div></div></div>`;
                 break;
             default:
                 contenidoHtml = `<div class="chat-msg-texto">${PERFILES.escapeHtml(m.contenido?.texto || '')}</div>`;
@@ -559,7 +559,7 @@ const chatUI = {
                 <div style="padding:20px;text-align:center">
                     <p style="margin-bottom:16px;color:var(--text-secondary)">¿Eliminar este mensaje para ti?</p>
                     <div style="display:flex;gap:8px">
-                        <button class="chat-btn-primary" style="background:#64748b;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
+                        <button class="chat-btn-primary" style="background:#454546;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
                         <button class="chat-btn-primary" style="background:var(--danger);flex:1" onclick="chatUI.confirmarEliminarParaMi('${msgId}')">Eliminar</button>
                     </div>
                 </div>
@@ -586,7 +586,7 @@ const chatUI = {
                 <div style="padding:20px;text-align:center">
                     <p style="margin-bottom:16px;color:var(--text-secondary)">¿Eliminar este mensaje para todos los participantes?</p>
                     <div style="display:flex;gap:8px">
-                        <button class="chat-btn-primary" style="background:#64748b;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
+                        <button class="chat-btn-primary" style="background:#454546;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
                         <button class="chat-btn-primary" style="background:var(--danger);flex:1" onclick="chatUI.confirmarEliminarParaTodos('${msgId}')">Eliminar</button>
                     </div>
                 </div>
@@ -841,7 +841,7 @@ const chatUI = {
             </div>
             ${esAdmin ? `
                 <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
-                    <button class="chat-btn-primary" onclick="chatUI.mostrarGestionGrupo()" style="background:#f59e0b"><i class="fa-solid fa-sliders"></i> Gestionar grupo</button>
+                    <button class="chat-btn-primary" onclick="chatUI.mostrarGestionGrupo()" style="background:#D8A1FF"><i class="fa-solid fa-sliders"></i> Gestionar grupo</button>
                 </div>
             ` : ''}
         `;
@@ -879,9 +879,9 @@ const chatUI = {
                 </div>
                 ${this.esDocente && miembro.rol !== 'docente' ? `
                     <div style="margin-top:12px;display:flex;flex-direction:column;gap:6px;width:100%">
-                        <button class="chat-btn-primary" style="background:${miembro.esAdmin ? '#64748b' : '#f59e0b'}" onclick="chatUI.toggleAdminMiembro('${grupoId}',${miembroId})"><i class="fa-solid fa-user-shield"></i> ${miembro.esAdmin ? 'Quitar admin' : 'Hacer admin'}</button>
-                        <button class="chat-btn-primary" style="background:#ef4444" onclick="chatUI.suspenderMiembro('${grupoId}',${miembroId})"><i class="fa-solid fa-ban"></i> Suspender</button>
-                        <button class="chat-btn-primary" style="background:#dc2626" onclick="chatUI.confirmarExpulsarMiembro('${grupoId}',${miembroId},'${PERFILES.escapeHtml(miembro.nombre)}')"><i class="fa-solid fa-user-slash"></i> Expulsar</button>
+                        <button class="chat-btn-primary" style="background:${miembro.esAdmin ? '#454546' : '#D8A1FF'}" onclick="chatUI.toggleAdminMiembro('${grupoId}',${miembroId})"><i class="fa-solid fa-user-shield"></i> ${miembro.esAdmin ? 'Quitar admin' : 'Hacer admin'}</button>
+                        <button class="chat-btn-primary" style="background:#B02B44" onclick="chatUI.suspenderMiembro('${grupoId}',${miembroId})"><i class="fa-solid fa-ban"></i> Suspender</button>
+                        <button class="chat-btn-primary" style="background:#8B1E33" onclick="chatUI.confirmarExpulsarMiembro('${grupoId}',${miembroId},'${PERFILES.escapeHtml(miembro.nombre)}')"><i class="fa-solid fa-user-slash"></i> Expulsar</button>
                     </div>
                 ` : ''}
             </div>
@@ -898,14 +898,14 @@ const chatUI = {
             html += `
                 <button class="chat-btn-primary" onclick="chatUI.editarNombreGrupo()"><i class="fa-solid fa-pen"></i> Editar nombre</button>
                 <button class="chat-btn-primary" onclick="chatUI.editarDescGrupo()"><i class="fa-solid fa-align-left"></i> Editar descripción</button>
-                <button class="chat-btn-primary" style="background:${grupo.cerrado ? '#22c55e' : '#ef4444'}" onclick="chatUI.toggleCerrarGrupo()">
+                <button class="chat-btn-primary" style="background:${grupo.cerrado ? '#10b981' : '#B02B44'}" onclick="chatUI.toggleCerrarGrupo()">
                     <i class="fa-solid ${grupo.cerrado ? 'fa-unlock' : 'fa-lock'}"></i> ${grupo.cerrado ? 'Abrir grupo' : 'Cerrar grupo'}
                 </button>
-                <button class="chat-btn-primary" style="background:#f59e0b" onclick="chatUI.agregarMiembrosGrupo()"><i class="fa-solid fa-user-plus"></i> Agregar alumnos</button>
-                <button class="chat-btn-primary" style="background:#dc2626" onclick="chatUI.confirmarEliminarGrupo()"><i class="fa-solid fa-trash"></i> Eliminar grupo</button>
+                <button class="chat-btn-primary" style="background:#D8A1FF" onclick="chatUI.agregarMiembrosGrupo()"><i class="fa-solid fa-user-plus"></i> Agregar alumnos</button>
+                <button class="chat-btn-primary" style="background:#B02B44" onclick="chatUI.confirmarEliminarGrupo()"><i class="fa-solid fa-trash"></i> Eliminar grupo</button>
             `;
         }
-        html += `<button class="chat-btn-primary" style="background:#64748b" onclick="chatUI.cerrarModal('modalInfoGrupo');chatUI.cerrarModal('modalOpcionesConv')"><i class="fa-solid fa-arrow-left"></i> Volver</button>`;
+        html += `<button class="chat-btn-primary" style="background:#454546" onclick="chatUI.cerrarModal('modalInfoGrupo');chatUI.cerrarModal('modalOpcionesConv')"><i class="fa-solid fa-arrow-left"></i> Volver</button>`;
         html += '</div>';
         document.getElementById('infoGrupoContent').innerHTML = html;
     },
@@ -924,7 +924,7 @@ const chatUI = {
                     <label style="display:block;margin-bottom:6px;font-size:13px;color:var(--text-secondary)">Nuevo nombre del grupo</label>
                     <input type="text" id="modalEditNombreInput" class="chat-input" value="${PERFILES.escapeHtml(grupo.nombre)}" style="width:100%">
                     <div style="display:flex;gap:8px;margin-top:12px">
-                        <button class="chat-btn-primary" style="background:#64748b;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
+                        <button class="chat-btn-primary" style="background:#454546;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
                         <button class="chat-btn-primary" style="flex:1" onclick="const i=document.getElementById('modalEditNombreInput');if(i.value.trim()){chatUI.guardarNombreGrupo(i.value.trim());this.closest('.chat-modal-overlay').remove()}">Guardar</button>
                     </div>
                 </div>
@@ -961,7 +961,7 @@ const chatUI = {
                     <label style="display:block;margin-bottom:6px;font-size:13px;color:var(--text-secondary)">Nueva descripción del grupo</label>
                     <textarea id="modalEditDescInput" class="chat-input" style="width:100%;min-height:80px;resize:vertical">${PERFILES.escapeHtml(grupo.descripcion || '')}</textarea>
                     <div style="display:flex;gap:8px;margin-top:12px">
-                        <button class="chat-btn-primary" style="background:#64748b;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
+                        <button class="chat-btn-primary" style="background:#454546;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
                         <button class="chat-btn-primary" style="flex:1" onclick="chatUI.guardarDescGrupo(document.getElementById('modalEditDescInput').value);this.closest('.chat-modal-overlay').remove()">Guardar</button>
                     </div>
                 </div>
@@ -999,7 +999,7 @@ const chatUI = {
                 <div style="padding:20px;text-align:center">
                     <p style="margin-bottom:16px;color:var(--text-secondary)">¿Eliminar el grupo para siempre? Esta acción no se puede deshacer.</p>
                     <div style="display:flex;gap:8px">
-                        <button class="chat-btn-primary" style="background:#64748b;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
+                        <button class="chat-btn-primary" style="background:#454546;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
                         <button class="chat-btn-primary" style="background:var(--danger);flex:1" onclick="this.closest('.chat-modal-overlay').remove();chatUI.eliminarGrupo()">Eliminar</button>
                     </div>
                 </div>
@@ -1031,7 +1031,7 @@ const chatUI = {
                     <label style="display:block;margin-bottom:6px;font-size:13px;color:var(--text-secondary)">Horas de suspensión (dejar vacío para indefinido)</label>
                     <input type="number" id="modalSuspenderInput" class="chat-input" placeholder="Ej: 24" min="1" style="width:100%">
                     <div style="display:flex;gap:8px;margin-top:12px">
-                        <button class="chat-btn-primary" style="background:#64748b;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
+                        <button class="chat-btn-primary" style="background:#454546;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
                         <button class="chat-btn-primary" style="background:var(--danger);flex:1" onclick="const i=document.getElementById('modalSuspenderInput');chatUI.ejecutarSuspender('${grupoId}',${miembroId},i.value);this.closest('.chat-modal-overlay').remove()">Suspender</button>
                     </div>
                 </div>
@@ -1065,7 +1065,7 @@ const chatUI = {
                 <div style="padding:20px;text-align:center">
                     <p style="margin-bottom:16px;color:var(--text-secondary)">¿Expulsar a <strong>${PERFILES.escapeHtml(nombre)}</strong> del grupo?</p>
                     <div style="display:flex;gap:8px">
-                        <button class="chat-btn-primary" style="background:#64748b;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
+                        <button class="chat-btn-primary" style="background:#454546;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
                         <button class="chat-btn-primary" style="background:var(--danger);flex:1" onclick="this.closest('.chat-modal-overlay').remove();chatUI.expulsarMiembro('${grupoId}',${miembroId})">Expulsar</button>
                     </div>
                 </div>
@@ -1101,7 +1101,7 @@ const chatUI = {
                 <div style="max-height:300px;overflow-y:auto;margin-bottom:12px">${checks || '<p>No hay alumnos disponibles</p>'}</div>
                 <div style="display:flex;gap:8px">
                     <button class="chat-btn-primary" onclick="chatUI.confirmarAgregarMiembros()" style="flex:1">Agregar seleccionados</button>
-                    <button class="chat-btn-primary" style="background:#64748b;flex:1" onclick="chatUI.abrirInfoGrupo()">Cancelar</button>
+                    <button class="chat-btn-primary" style="background:#454546;flex:1" onclick="chatUI.abrirInfoGrupo()">Cancelar</button>
                 </div>
             </div>`;
     },
@@ -1174,7 +1174,7 @@ const chatUI = {
         items.push({ icon: conv.archivado ? 'fa-box-open' : 'fa-box-archive', text: conv.archivado ? 'Desarchivar conversación' : 'Archivar conversación', action: `chatUI.toggleArchivar()`, extra: '' });
 
         if (!esGrupo) {
-            items.push({ icon: conv.favorito ? 'fa-star' : 'fa-star', text: conv.favorito ? 'Quitar de favoritos' : 'Agregar a favoritos', action: `chatUI.toggleFavorito()`, extra: conv.favorito ? 'style="color:#f59e0b"' : '' });
+            items.push({ icon: conv.favorito ? 'fa-star' : 'fa-star', text: conv.favorito ? 'Quitar de favoritos' : 'Agregar a favoritos', action: `chatUI.toggleFavorito()`, extra: conv.favorito ? 'style="color:#D8A1FF"' : '' });
         }
 
         const muted = conv.silenciado && (!conv.silenciadoHasta || new Date(conv.silenciadoHasta) > new Date());
@@ -1266,7 +1266,7 @@ const chatUI = {
                 <div style="padding:20px;text-align:center">
                     <p style="margin-bottom:16px;color:var(--text-secondary)">¿Eliminar esta conversación? Los mensajes se eliminarán para ti.</p>
                     <div style="display:flex;gap:8px">
-                        <button class="chat-btn-primary" style="background:#64748b;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
+                        <button class="chat-btn-primary" style="background:#454546;flex:1" onclick="this.closest('.chat-modal-overlay').remove()">Cancelar</button>
                         <button class="chat-btn-primary" style="background:var(--danger);flex:1" onclick="this.closest('.chat-modal-overlay').remove();chatUI.eliminarConv()">Eliminar</button>
                     </div>
                 </div>
@@ -1508,7 +1508,7 @@ const chatUI = {
     // --- CUSTOMIZATION ---
     mostrarSelectorColor() {
         this.cerrarModal('modalOpcionesConv');
-        const colores = ['#6366f1', '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#ec4899', '#8b5cf6', '#14b8a6', '#f97316'];
+        const colores = ['#560591', '#D8A1FF', '#B02B44', '#7A10C0', '#10b981', '#454546', '#3E036E', '#F0E6F7', '#8B1E33'];
         const overlay = document.createElement('div');
         overlay.className = 'chat-modal-overlay';
         overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:300;display:flex;align-items:center;justify-content:center';
@@ -1521,7 +1521,7 @@ const chatUI = {
                 </div>
                 <div style="padding:16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
                     ${colores.map(c => `<div style="width:48px;height:48px;border-radius:50%;background:${c};cursor:pointer;border:3px solid transparent;transition:all 0.2s" onclick="chatUI.aplicarColorBurbujas('${c}');this.closest('.chat-modal-overlay').remove()" onmouseenter="this.style.borderColor='white';this.style.transform='scale(1.1)'" onmouseleave="this.style.borderColor='transparent';this.style.transform='scale(1)'"></div>`).join('')}
-                    <div style="width:100%;margin-top:4px"><button class="chat-btn-primary" style="background:#64748b;width:100%" onclick="chatUI.aplicarColorBurbujas(null);this.closest('.chat-modal-overlay').remove()"><i class="fa-solid fa-rotate-left"></i> Restablecer</button></div>
+                    <div style="width:100%;margin-top:4px"><button class="chat-btn-primary" style="background:#454546;width:100%" onclick="chatUI.aplicarColorBurbujas(null);this.closest('.chat-modal-overlay').remove()"><i class="fa-solid fa-rotate-left"></i> Restablecer</button></div>
                 </div>
             </div>`;
         document.body.appendChild(overlay);

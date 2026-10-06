@@ -50,9 +50,9 @@ const PERFILES = {
 
     obtenerNotaColor(nota) {
         if (nota >= 90) return '#10b981';
-        if (nota >= 75) return '#3b82f6';
-        if (nota >= 60) return '#f59e0b';
-        return '#ef4444';
+        if (nota >= 75) return '#560591';
+        if (nota >= 60) return '#D8A1FF';
+        return '#B02B44';
     },
 
     obtenerLetraNota(nota) {

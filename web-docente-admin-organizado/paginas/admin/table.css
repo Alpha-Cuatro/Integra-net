@@ -48,7 +48,7 @@
 .status-active { background: var(--success-light); color: var(--success); }
 .status-inactive { background: var(--danger-light); color: var(--danger); }
 .status-pending { background: var(--warning-light); color: var(--warning); }
-.status-completed { background: #d1ecf1; color: #0c5460; }
+.status-completed { background: #F0E6F7; color: #560591; }
 
 .pagination {
   display: flex;
@@ -73,7 +73,7 @@
   background: var(--primary-gradient);
   color: white;
   border-color: var(--primary);
-  box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+  box-shadow: 0 2px 8px rgba(86,5,145,0.3);
 }
 .pagination button:hover:not(.active) {
   background: var(--bg-alt);

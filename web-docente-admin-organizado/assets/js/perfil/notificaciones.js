@@ -108,19 +108,19 @@ const NOTIFICACIONES = {
 
     getColor(tipo) {
         const mapa = {
-            nueva_tarea: '#3b82f6',
+            nueva_tarea: '#560591',
             entrega_calificada: '#10b981',
-            nueva_entrega: '#f59e0b',
-            nueva_nota: '#6366f1',
-            nueva_observacion: '#8b5cf6',
-            nuevo_recurso: '#06b6d4',
-            nuevo_estudiante: '#22c55e',
-            nuevo_grupo: '#2563eb',
-            nuevo_mensaje: '#6366f1',
-            logro: '#f59e0b',
+            nueva_entrega: '#D8A1FF',
+            nueva_nota: '#560591',
+            nueva_observacion: '#7A10C0',
+            nuevo_recurso: '#D8A1FF',
+            nuevo_estudiante: '#10b981',
+            nuevo_grupo: '#560591',
+            nuevo_mensaje: '#7A10C0',
+            logro: '#D8A1FF',
             nivel: '#10b981',
-            insigne: '#ec4899'
+            insigne: '#B02B44'
         };
-        return mapa[tipo] || '#64748b';
+        return mapa[tipo] || '#454546';
     }
 };
