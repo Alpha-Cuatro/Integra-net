@@ -36,9 +36,10 @@ Las capacitaciones sobre derechos y dignidad de la mujer suelen quedarse en sesi
 | Categoría | Tecnología | ¿Por qué se eligió? |
 |---|---|---|
 | Estructura | HTML5 | Estándar web, funciona en cualquier navegador sin instalar nada. |
-| Estilos | CSS3 (variables/tokens propios en `design.css`) | Permite cambiar toda la identidad visual desde un solo archivo, sin librerías externas. |
-| Lógica | JavaScript puro (sin frameworks) | Menor curva de aprendizaje, cero compilación y fácil de revisar. |
-| Backend y base de datos | **Supabase** (PostgreSQL + Auth + Realtime) | Ofrece base de datos, autenticación y tiempo real listos para usar, sin programar ni mantener un servidor propio. Su capa gratuita basta para un prototipo. |
+| Estilos | CSS3 (variables/tokens de diseño propios en `design.css`) | Permite cambiar toda la identidad visual desde un solo archivo, sin librerías externas. |
+| Lógica (frontend) | JavaScript puro (sin frameworks) | Menor curva de aprendizaje, cero compilación en el cliente y fácil de revisar. |
+| Backend | **Node.js** | Permite usar JavaScript también en el servidor, con un solo lenguaje en todo el proyecto, y centraliza la lógica y las claves privadas fuera del navegador. |
+| Base de datos | **Supabase** (PostgreSQL) | Base de datos relacional gestionada, sin administrar servidores propios. Su capa gratuita basta para un prototipo. |
 | Autenticación | Supabase Auth | Maneja registro, login y sesiones de forma segura, en lugar de guardar contraseñas manualmente. |
 | Chat en tiempo real | Supabase Realtime | Permite mensajes instantáneos entre docente y estudiante sin montar WebSockets propios. |
 | Iconografía | Font Awesome 6.5.1 (CDN) | Amplio catálogo de iconos, de uso inmediato. |
@@ -47,12 +48,11 @@ Las capacitaciones sobre derechos y dignidad de la mujer suelen quedarse en sesi
 
 ### Decisiones técnicas
 
-- **Frontend sin framework + Supabase:** se priorizó la rapidez de desarrollo y la facilidad de ejecución. Supabase aporta lo que un frontend puro no puede (datos compartidos entre dispositivos, autenticación real y chat en tiempo real) sin necesidad de escribir un backend.
+- **Node.js en el backend:** se eligió para mantener JavaScript como único lenguaje en todo el proyecto, lo que simplifica el aprendizaje y el mantenimiento. Además, permite proteger las claves privadas de Supabase en el servidor.
+- **Supabase como base de datos:** ofrece PostgreSQL, autenticación y tiempo real sin tener que montar ni mantener infraestructura propia.
+- **Frontend en JavaScript puro:** se priorizó la rapidez de desarrollo; el alcance del prototipo no justificaba la complejidad de un framework como React.
 - **Por qué no localStorage como base de datos:** los datos quedarían solo en el navegador de cada persona, y docente y estudiante no podrían verse entre sí. Con Supabase todos trabajan sobre la misma información.
-- **Por qué no React u otro framework:** el alcance del prototipo no justificaba la complejidad de compilación y dependencias.
 - **Limitaciones conocidas:** es un prototipo; antes de usarlo en producción se deben revisar las políticas de seguridad (RLS), la validación de datos y el manejo de datos sensibles de menores.
-
-> Para ejecutar el proyecto no se necesita compilar ni instalar dependencias.
 
 ---
 
@@ -65,7 +65,7 @@ Prototipo-app/
 ├── scripts.js            # Lógica principal (estudiante)
 ├── design.css            # Sistema de diseño (colores, tipografía, tokens)
 ├── auth.js               # Control de acceso por rol (guard de rutas)
-├── supabase-config.js    # Conexión con Supabase (URL y clave pública)
+├── supabase-config.js    # Conexión del frontend con Supabase (URL y clave pública)
 ├── auth/                 # Login y registro
 │   ├── login.html / .css / .js
 │   └── signup.html / .css / .js
@@ -83,8 +83,14 @@ Prototipo-app/
 │   ├── chat.js / chatUI.js
 │   ├── grupos.js / tareas.js / notificaciones.js
 │   └── datosIniciales.js # Datos semilla del prototipo
+├── backend/              # Servidor Node.js (API y conexión con Supabase)
+│   ├── package.json
+│   ├── .env              # Variables privadas (NO se sube a GitHub)
+│   └── ...
 └── images/               # Recursos gráficos (logo, fondos, avatar)
 ```
+
+> Ajusta el nombre `backend/` y su contenido al de tu proyecto.
 
 ---
 
@@ -112,7 +118,7 @@ El sistema define tres roles con accesos diferenciados:
 | **Estudiante** | Consulta sus materias, calificaciones, asistencia, competencias y tareas; entrega trabajos y participa en el chat con su docente. |
 | **Administrador** | Supervisa el sistema desde un panel general (estudiantes, docentes, tareas y actividades registradas). |
 
-El control de acceso se aplica en `auth.js`, que valida la sesión activa (gestionada por Supabase Auth) y redirige según el rol (`docente` / `estudiante` / `admin`) para impedir el acceso a rutas que no le corresponden. En la base de datos, las políticas **Row Level Security (RLS)** de Supabase refuerzan que cada rol solo lea y escriba los datos que le corresponden.
+El control de acceso se aplica en `auth.js`, que valida la sesión activa (gestionada por Supabase Auth) y redirige según el rol (`docente` / `estudiante` / `admin`) para impedir el acceso a rutas que no le corresponden. En el servidor y en la base de datos, las políticas **Row Level Security (RLS)** de Supabase refuerzan que cada rol solo lea y escriba los datos que le corresponden.
 
 ---
 
@@ -121,9 +127,16 @@ El control de acceso se aplica en `auth.js`, que valida la sesión activa (gesti
 | Requisito | Para qué sirve |
 |---|---|
 | Git | Clonar el repositorio |
-| Python 3 **o** VS Code con la extensión *Live Server* | Levantar un servidor estático local |
+| Node.js (versión LTS) y npm | Ejecutar el backend e instalar sus dependencias |
 | Cuenta gratuita en Supabase | Base de datos, autenticación y chat en tiempo real |
 | Conexión a internet | Supabase, Font Awesome, Chart.js y Google Fonts se cargan en línea |
+
+Para comprobar que Node.js y npm están instalados:
+
+```bash
+node -v
+npm -v
+```
 
 ---
 
@@ -145,13 +158,39 @@ cd Prototipo-app
 3. En **SQL Editor**, crea las tablas que usa el proyecto (usuarios, materias, tareas, calificaciones, asistencia, mensajes, etc.).
 4. En **Authentication → Providers**, verifica que **Email** esté habilitado. Para pruebas puedes desactivar la confirmación por correo.
 5. En **Database → Replication** (o *Realtime*), activa Realtime en la tabla de mensajes del chat.
+6. En **Project Settings → API**, copia el **Project URL**, la clave **anon public** y la clave **service_role**.
 
-### 3. Conectar el proyecto con Supabase
+### 3. Configurar y ejecutar el backend (Node.js)
 
-1. En Supabase, ve a **Project Settings → API** y copia:
-   - **Project URL**
-   - **anon public key**
-2. Abre `supabase-config.js` y pega tus valores:
+Entra a la carpeta del backend e instala las dependencias:
+
+```bash
+cd backend
+npm install
+```
+
+Crea un archivo `.env` dentro de `backend/` con tus datos:
+
+```env
+SUPABASE_URL=https://TU-PROYECTO.supabase.co
+SUPABASE_ANON_KEY=TU-CLAVE-ANON-PUBLICA
+SUPABASE_SERVICE_ROLE_KEY=TU-CLAVE-SERVICE-ROLE
+PORT=3000
+```
+
+> ⚠️ La clave `service_role` da acceso total a la base de datos: úsala **solo en el backend** y **nunca** la subas a GitHub. Verifica que `.env` esté en tu `.gitignore`.
+
+Inicia el servidor:
+
+```bash
+npm start
+```
+
+El backend quedará escuchando en `http://localhost:3000` (o el puerto que hayas definido en `PORT`).
+
+### 4. Conectar el frontend con Supabase
+
+Abre `supabase-config.js` (en la raíz del proyecto) y pega **solo** la URL y la clave pública:
 
 ```js
 const SUPABASE_URL = "https://TU-PROYECTO.supabase.co";
@@ -160,23 +199,11 @@ const SUPABASE_ANON_KEY = "TU-CLAVE-ANON-PUBLICA";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 ```
 
-> ⚠️ Usa **solo la clave `anon`**. **Nunca** subas la clave `service_role` al repositorio: da acceso total a la base de datos.
-
-### 4. Levantar un servidor estático local
-
-Es necesario para que las rutas relativas funcionen; abrir `index.html` con doble clic puede dar errores.
-
-**Opción A — Python** (en Windows suele ser `python` en lugar de `python3`):
-
-```bash
-python3 -m http.server 5500
-```
-
-**Opción B — VS Code:** instala la extensión *Live Server*, haz clic derecho sobre `auth/login.html` → **Open with Live Server**.
-
 ### 5. Abrir la aplicación
 
-Abre en el navegador:
+El frontend necesita servirse desde un servidor para que las rutas relativas funcionen; abrir `index.html` con doble clic puede dar errores de ruta. Puedes usar la extensión **Live Server** de VS Code: clic derecho sobre `auth/login.html` → **Open with Live Server**.
+
+Luego abre en el navegador:
 
 ```
 http://localhost:5500/auth/login.html
@@ -202,14 +229,14 @@ Datos definidos para probar el prototipo:
 
 ## 🔒 Buenas prácticas aplicadas
 
-- Separación de responsabilidades por carpeta (`auth`, `docente`, `admin`, `perfil`).
+- Separación de responsabilidades por carpeta (`auth`, `docente`, `admin`, `perfil`, `backend`).
 - Sistema de diseño centralizado en variables CSS (`design.css`) para mantener consistencia visual y facilitar cambios globales.
 - Guard de rutas por rol en `auth.js`, reforzado con políticas RLS en la base de datos.
-- Uso exclusivo de la clave pública (`anon`) en el frontend.
+- Claves privadas (`service_role`) únicamente en el backend mediante variables de entorno (`.env`); en el frontend solo se usa la clave pública (`anon`).
 - Nomenclatura consistente en español para variables de dominio (materias, docentes, estudiantes).
 
 ---
 
 ## 🧩 Control de versiones
 
-El desarrollo se llevó con Git, con commits incrementales que documentan el avance del prototipo (estructura inicial, diseño, autenticación, tablas, tablero, integración con Supabase y versiones de funcionalidad).
+El desarrollo se llevó con Git, con commits incrementales que documentan el avance del prototipo (estructura inicial, diseño, autenticación, tablas, tablero, backend con Node.js, integración con Supabase y versiones de funcionalidad).
