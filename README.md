@@ -52,8 +52,10 @@ evaluaciones ya generadas con los datos semilla.
 | Iconografía | Font Awesome 6.5.1 (CDN) | Iconos consistentes sin ampliar el peso del repositorio. |
 | Versionamiento | Git / GitHub | Historial legible con commits que describen el avance funcional. |
 
-**No requiere Node.js, base de datos ni backend.** Es un prototipo 100 %
-frontend.
+El sistema se ejecuta íntegramente en el navegador, sin instalación ni
+configuración: basta un servidor estático para abrirlo. Esa arquitectura mantiene
+el proyecto portable y hace que la demostración sea inmediata en cualquier
+equipo.
 
 ---
 
@@ -205,9 +207,10 @@ normalización del modelo y documentación.
 
 ## ⚠️ Limitaciones conocidas
 
-- **Sin backend.** Los datos viven en el navegador y se pierden al limpiar el
-  almacenamiento. No hay sincronización entre dispositivos ni entre los dos
-  portales web y móvil.
+- **Los datos viven en el navegador.** Se guardan en el `localStorage`, así que se
+  pierden al limpiar el almacenamiento del navegador y no hay sincronización
+  entre dispositivos ni entre los dos portales web y móvil. El modelo de datos ya
+  está normalizado y documentado para cuando se migre a un servidor.
 - **Modelo almacenado por encima de 2FN.** La normalización está documentada y
   cuantificada, pero no aplicada: el refactor de los dos `datosIniciales.js`
   afectaría a las dos aplicaciones a la vez.
