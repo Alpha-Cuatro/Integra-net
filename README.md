@@ -1,132 +1,166 @@
-# Integra-net — Plataforma Educativa
+Integra-net
 
-Prototipo funcional de una plataforma web educativa que conecta a **docentes** y **estudiantes** en un mismo espacio de gestión académica: materias, tareas, calificaciones, asistencia, competencias, observaciones, grupos y chat en tiempo real, además de un panel administrativo para el seguimiento general del sistema.
+Prototipo funcional de una plataforma web educativa que conecta a docentes y estudiantes en un mismo espacio de gestión académica: materias, tareas, calificaciones, asistencia, competencias, observaciones, grupos y chat en tiempo real, además de un panel administrativo para el seguimiento general del sistema.
 
-> Proyecto desarrollado para el reto **"Plataforma de aprendizaje"** — categoría Aficionado, temática Educación — enfocado en **Derechos y Dignidad de la Mujer** (prevención de violencia, equidad de género, autoestima, comunicación asertiva, corresponsabilidad, bienestar y ciudadanía).
+Proyecto desarrollado para el reto "Plataforma de aprendizaje" — categoría Aficionado, temática Educación — enfocado en Derechos y Dignidad de la Mujer (prevención de violencia, equidad de género, autoestima, comunicación asertiva, corresponsabilidad, bienestar y ciudadanía).
 
-## 📌 Descripción general
+📸 Capturas / demo: (agrega aquí 2 o 3 capturas: login, panel del docente, vista del estudiante, y el enlace a la demo o video si existe)
 
-Integra-net responde a la necesidad de una herramienta digital que complemente las capacitaciones docentes en la asignatura de Derechos y Dignidad de la Mujer, permitiendo a los **docentes** gestionar contenido, tareas y evaluaciones, y a los **estudiantes** acceder de forma interactiva a los 8 módulos temáticos, hacer seguimiento de su progreso y comunicarse con su docente. Un panel de **administrador** supervisa el uso general del sistema.
+📌 Descripción general
 
-### Módulos temáticos incluidos
-1. Derechos de la Mujer: Fundamentos
-2. Prevención de la Violencia de Género
-3. Equidad de Género
-4. Autoestima y Empoderamiento
-5. Comunicación Asertiva y Resolución de Conflictos
-6. Corresponsabilidad y Roles de Género
-7. Salud y Bienestar Integral
-8. Ciudadanía, Participación y Liderazgo
+Integra-net responde a la necesidad de una plataforma digital que complemente las capacitaciones docentes en la asignatura de Derechos y Dignidad de la Mujer. Permite que:
 
-## 🛠️ Tecnologías utilizadas
+Los docentes gestionen contenidos, tareas y evaluaciones.
+Los estudiantes accedan de forma interactiva a los 8 módulos temáticos, hagan seguimiento de su progreso y se comuniquen con su docente.
+El administrador supervise el uso general del sistema desde un panel propio.
+¿Qué problema resuelve?
 
-| Categoría | Tecnología |
-|---|---|
-| Estructura | HTML5 |
-| Estilos | CSS3 (variables/design tokens propios en `design.css`) |
-| Lógica | JavaScript (Vanilla JS, sin frameworks) |
-| Persistencia | `localStorage` del navegador (prototipo sin backend) |
-| Iconografía | Font Awesome 6.5.1 (CDN) |
-| Gráficos | Chart.js 4.4.1 (CDN) |
-| Control de versiones | Git / GitHub |
+Las capacitaciones sobre derechos y dignidad de la mujer suelen quedarse en sesiones presenciales sin seguimiento. Integra-net da continuidad: el contenido, las tareas, la evaluación y la comunicación quedan en un solo lugar, accesible para docentes y estudiantes.
 
-No requiere Node.js, base de datos ni servidor backend para ejecutarse: es un prototipo 100% frontend.
+Módulos temáticos incluidos
+Derechos de la Mujer: Fundamentos
+Prevención de la Violencia de Género
+Equidad de Género
+Autoestima y Empoderamiento
+Comunicación Asertiva y Resolución de Conflictos
+Corresponsabilidad y Roles de Género
+Salud y Bienestar Integral
+Ciudadanía, Participación y Liderazgo
+🛠️ Tecnologías utilizadas y por qué
+Categoría	Tecnología	¿Por qué se eligió?
+Estructura	HTML5	Estándar web, funciona en cualquier navegador sin instalar nada.
+Estilos	CSS3 (variables/tokens propios en design.css)	Permite cambiar toda la identidad visual desde un solo archivo, sin librerías externas.
+Lógica	JavaScript puro (sin frameworks)	Menor curva de aprendizaje, cero compilación y fácil de revisar por el equipo y el jurado.
+Backend y base de datos	Supabase (PostgreSQL + Auth + Realtime)	Ofrece base de datos, autenticación y tiempo real listos para usar, sin programar ni mantener un servidor propio. Su capa gratuita basta para un prototipo.
+Autenticación	Supabase Auth	Maneja registro, login y sesiones de forma segura, en lugar de guardar contraseñas manualmente.
+Chat en tiempo real	Supabase Realtime	Permite mensajes instantáneos entre docente y estudiante sin montar WebSockets propios.
+Iconografía	Font Awesome 6.5.1 (CDN)	Amplio catálogo de iconos, de uso inmediato.
+Gráficos	Chart.js 4.4.1 (CDN)	Ligera y simple para mostrar progreso y estadísticas en los paneles.
+Control de versiones	Git / GitHub	Historial de cambios y trabajo colaborativo.
+Decisiones técnicas
+Frontend sin framework + Supabase: se priorizó la rapidez de desarrollo y la facilidad de ejecución. Supabase aporta lo que un frontend puro no puede (datos compartidos entre dispositivos, autenticación real y chat en tiempo real) sin necesidad de escribir un backend.
+Por qué no localStorage como base de datos: los datos quedarían solo en el navegador de cada persona, y docente y estudiante no podrían verse entre sí. Con Supabase todos trabajan sobre la misma información.
+Por qué no React u otro framework: el alcance del prototipo no justificaba la complejidad de compilación y dependencias.
+Limitaciones conocidas: es un prototipo; antes de usarlo en producción se deben revisar las políticas de seguridad (RLS), la validación de datos y el manejo de datos sensibles de menores.
 
-## 📁 Estructura del proyecto
+Requiere Node.js solo si deseas usar herramientas opcionales; para ejecutar el proyecto no se necesita compilar nada.
 
-```
+📁 Estructura del proyecto
 Prototipo-app/
 ├── index.html            # Vista principal del estudiante
-├── styles.css             # Estilos generales de la app
-├── scripts.js             # Lógica principal (estudiante)
-├── design.css              # Sistema de diseño (colores, tipografía, tokens)
-├── auth.js                  # Control de acceso por rol (guard de rutas)
-├── auth/                      # Login y registro
+├── styles.css            # Estilos generales de la app
+├── scripts.js            # Lógica principal (estudiante)
+├── design.css            # Sistema de diseño (colores, tipografía, tokens)
+├── auth.js               # Control de acceso por rol (guard de rutas)
+├── supabase-config.js    # Conexión con Supabase (URL y clave pública)
+├── auth/                 # Login y registro
 │   ├── login.html / .css / .js
 │   └── signup.html / .css / .js
-├── docente/                    # Panel del docente
+├── docente/              # Panel del docente
 │   ├── index.html
 │   ├── docente.js
 │   └── styles.css
-├── admin/                        # Panel administrativo
+├── admin/                # Panel administrativo
 │   ├── admin.js / .css
 │   ├── table.js / .css
 │   ├── dashboard/
 │   └── Tareas/
-├── perfil/                          # Módulos de perfil, chat y datos
+├── perfil/               # Módulos de perfil, chat y datos
 │   ├── perfilAlumno.js / perfilDocente.js
 │   ├── chat.js / chatUI.js
 │   ├── grupos.js / tareas.js / notificaciones.js
-│   └── datosIniciales.js          # Datos semilla del prototipo
-└── images/                          # Recursos gráficos (logo, fondos, avatar)
-```
-
-## 🎨 Identidad visual
+│   └── datosIniciales.js # Datos semilla del prototipo
+└── images/               # Recursos gráficos (logo, fondos, avatar)
+🎨 Identidad visual
 
 La paleta y tipografía se replantearon para reflejar el tema del reto, en vez de usar el azul-índigo genérico de plantilla:
 
-- **Violeta amaranto** (`#7A2059`) como color primario — el violeta es el color histórico asociado a la lucha por los derechos de la mujer.
-- **Naranja** (`#E2673C`) como acento — en referencia a la campaña internacional "Únete: actívate para poner fin a la violencia contra las mujeres" (ONU Mujeres).
-- Fondo cálido, no el gris-azulado típico de dashboards SaaS.
-- Tipografía: **Fraunces** (serif con carácter) para títulos, **Lexend** (diseñada para mejorar la lectura) para el cuerpo de texto — ambas vía Google Fonts.
-- Elemento de firma: una franja diagonal violeta→naranja (`.ribbon-accent` en `design.css`) que evoca el lazo símbolo internacional contra la violencia de género, usada en encabezados y tarjetas clave.
+Violeta amaranto (
+#7A2059) como color primario — la violeta es el color histórico asociado a la lucha por los derechos de la mujer.
+Naranja (
+#E2673C) como acento — en referencia a la campaña internacional "Únete: actívate para poner fin a la violencia contra las mujeres" (ONU Mujeres).
+Fondo cálido, no el gris-azulado típico de los paneles SaaS.
+Tipografía: Fraunces (serif con carácter) para títulos y Lexend (diseñada para mejorar la lectura) para el cuerpo de texto, ambas vía Google Fonts.
+Elemento de firma: una franja diagonal violeta→naranja (.ribbon-accent en design.css) que evoca el lazo símbolo internacional contra la violencia de género, usado en encabezados y tarjetas clave.
 
-Todo el sistema de color sigue centralizado en variables CSS (`design.css`), por lo que cualquier ajuste de tono se hace en un solo lugar.
+Todo el sistema de color está centralizado en variables CSS (design.css), por lo que cualquier ajuste de tono se hace en un solo lugar.
 
-## 👥 Roles y permisos
+👥 Roles y permisos
 
 El sistema define tres roles con accesos diferenciados:
 
-- **Docente**: crea y gestiona materias, tareas, evaluaciones, asistencia y observaciones de sus estudiantes; se comunica por chat y visualiza reportes de su grupo.
-- **Estudiante**: consulta sus materias, calificaciones, asistencia, competencias y tareas; entrega trabajos y participa en el chat con su docente.
-- **Administrador**: supervisa el sistema desde un panel general (estudiantes, docentes, tareas y actividades registradas).
+Rol	Qué puede hacer
+Docente	Crea y gestiona materias, tareas, evaluaciones, asistencia y observaciones de sus estudiantes; se comunica por chat y visualiza informes de su grupo.
+Estudiante	Consulta sus materias, calificaciones, asistencia, competencias y tareas; entrega trabajos y participa en el chat con su docente.
+Administrador	Supervisa el sistema desde un panel general (estudiantes, docentes, tareas y actividades registradas).
 
-El control de acceso se aplica en `auth.js`, que valida la sesión activa (`eduSesion` en `localStorage`) y redirige según el rol (`docente` / `estudiante`) para impedir el acceso a rutas que no le corresponden.
+El control de acceso se aplica en auth.js, que valida la sesión activa (gestionada por Supabase Auth) y redirige según el rol (docente / estudiante / admin) para impedir el acceso a rutas que no le corresponden. En la base de datos, las políticas Row Level Security (RLS) de Supabase refuerzan que cada rol solo lea y escriba los datos que le corresponden.
 
-## 🚀 Instalación y ejecución local
+✅ Requisitos previos
+Requisito	Para qué sirve
+Git	Clonar el repositorio
+Python 3 o VS Code con la extensión Live Server	Levantar un servidor estático local
+Cuenta gratuita en Supabase	Base de datos, autenticación y chat en tiempo real
+Conexión a internet	Supabase, Font Awesome, Chart.js y Google Fonts se cargan en línea
+🚀 Instalación y ejecución desde cero
+1. Clonar el repositorio
+bash
+git clone <url-del-repositorio>
+cd Prototipo-app
 
-No requiere build ni instalación de dependencias. Para ejecutarlo:
+Reemplaza <url-del-repositorio> por la URL real de tu repositorio en GitHub.
 
-1. **Clonar el repositorio**
-   ```bash
-   git clone <url-del-repositorio>
-   cd Prototipo-app
-   ```
+2. Crear el proyecto en Supabase
+Entra a supabase.com, inicia sesión y pulsa New project.
+Elige un nombre y una contraseña para la base de datos, y espera a que termine de crearse.
+Ve a SQL Editor y ejecuta el script de tablas del proyecto (agrega aquí el archivo, por ejemplo database/schema.sql, con las tablas de usuarios, materias, tareas, calificaciones, asistencia, mensajes, etc.).
+Ve a Authentication → Providers y verifica que Email esté habilitado. Para pruebas puedes desactivar la confirmación por correo.
+Ve a Database → Replication (o Realtime) y activa Realtime en la tabla de mensajes del chat.
+3. Conectar el proyecto con Supabase
+En Supabase, ve a Project Settings → API y copia:
+Project URL
+anon public key
+Abre supabase-config.js y pega tus valores:
+js
+const SUPABASE_URL = "https://TU-PROYECTO.supabase.co";
+const SUPABASE_ANON_KEY = "TU-CLAVE-ANON-PUBLICA";
 
-2. **Levantar un servidor estático local** (necesario para que `localStorage` y las rutas relativas funcionen correctamente; abrir el `index.html` con doble clic puede dar errores de ruta):
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-   Con Python:
-   ```bash
-   python3 -m http.server 5500
-   ```
-   Con la extensión **Live Server** de VS Code:
-   - Clic derecho sobre `auth/login.html` → "Open with Live Server"
+⚠️ Usa solo la clave anon. Nunca subas la clave service_role al repositorio: da acceso total a la base de datos.
 
-3. **Acceder a la app**
-   - Abrir `http://localhost:5500/auth/login.html` (o `signup.html` si es la primera vez)
-   - Registrar un usuario para generar datos de sesión iniciales
+4. Levantar un servidor estático local
 
-## 🔒 Buenas prácticas aplicadas
+Es necesario para que las rutas relativas funcionen; abrir index.html con doble clic puede dar errores.
 
-- Separación de responsabilidades por carpeta (auth, docente, admin, perfil)
-- Sistema de diseño centralizado en variables CSS (`design.css`) para mantener consistencia visual y facilitar cambios globales
-- Guard de rutas por rol en `auth.js`
-- Nomenclatura consistente en español para variables de dominio (materias, docentes, estudiantes)
+Opción A — Python (en Windows suele ser python en lugar de python3):
 
-## 🧩 Control de versiones
+bash
+python3 -m http.server 5500
 
-El desarrollo se llevó mediante Git, con commits incrementales documentando el avance del prototipo (estructura inicial, diseño, autenticación, tablas, dashboard, versiones de funcionalidad).
+Opción B — VS Code: instala la extensión Live Server, haz clic derecho sobre auth/login.html → Open with Live Server.
 
-*_PERFILES DE USUARIO CON DATOS DEFINIDOS DENTRO DEL PROTOTIPO_*
+5. Abrir la aplicación
 
-*Docente*
+Visita http://localhost:5500/auth/login.html e inicia sesión con uno de los usuarios de prueba (ver más abajo), o regístrate en signup.html si es tu primera vez.
 
-Correo: manuel.antonio@colegio.edu
+🔑 Perfiles de usuario de prueba
 
-Contraseña: Manuel@2026
+Datos definidos para probar el prototipo:
 
-*Estudiante*
+Rol	Correo	Contraseña
+Docente	manuel.antonio@colegio.edu	Manuel@2026
+Estudiante	juan.carlos@colegio.edu	JuanCarlos@2026
+Administrador	(agregar)	(agregar)
 
-Correo: juan.carlos@colegio.edu
+Estos usuarios deben existir en Supabase Auth (créalos desde Authentication → Users o con el registro de la app). Son solo para pruebas: no uses estas credenciales en un entorno real.
 
-Contraseña: JuanCarlos@2026
+🔒 Buenas prácticas aplicadas
+Separación de responsabilidades por carpeta (auth, docente, admin, perfil).
+Sistema de diseño centralizado en variables CSS (design.css) para mantener consistencia visual y facilitar cambios globales.
+Guard de rutas por rol en auth.js, reforzado con políticas RLS en la base de datos.
+Uso exclusivo de la clave pública (anon) en el frontend.
+Nomenclatura consistente en español para variables de dominio (materias, docentes, estudiantes).
+🧩 Control de versiones
+
+El desarrollo se llevó con Git, con commits incrementales que documentan el avance del prototipo (estructura inicial, diseño, autenticación, tablas, tablero, integración con Supabase y versiones de funcionalidad).
