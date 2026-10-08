@@ -221,7 +221,7 @@ Datos definidos para probar el prototipo:
 |---|---|---|
 | Docente | manuel.antonio@colegio.edu | Manuel@2026 |
 | Estudiante | juan.carlos@colegio.edu | JuanCarlos@2026 |
-| Administrador | *(agregar)* | *(agregar)* |
+| Administrador | admin@colegio.edu |dmin@2026 |
 
 > Estos usuarios deben existir en Supabase Auth (créalos desde **Authentication → Users** o con el registro de la app). Son solo para pruebas: **no uses estas credenciales en un entorno real.**
 
