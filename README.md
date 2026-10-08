@@ -93,6 +93,21 @@ Prototipo-app/
 > Ajusta el nombre `backend/` y su contenido al de tu proyecto.
 
 ---
+## 📝 Convenciones de nomenclatura
+
+| Elemento | Nomenclatura | Ejemplos | Ubicación |
+|---|---|---|---|
+| Variables y funciones JS | camelCase (en español) | `otroId`, `esGrupo`, `noLeidos`, `mostrarModal` | Todos los `.js` |
+| Clases JS | PascalCase | `TableGenerator` | `paginas/admin/table.js` |
+| Constantes globales | UPPER_SNAKE_CASE | `PASSWORD_MIN_LENGTH`, `SISTEMA_CONFIG`, `MATERIAS_SECUNDARIA` | `auth.js`, `login.js`, `signup.js`, `perfil/datosIniciales.js` |
+| Clases CSS | kebab-case | `.nombre-de-clase` | `styles.css`, `design.css`, `admin.css`, `dashboard.css`, `docente.css`, `login.css` |
+| Claves de `localStorage` | Prefijo `edu` + PascalCase | `eduUsuarios`, `eduEvaluaciones`, `eduSesion` | `perfil/*.js` y `docs/modelo-datos.md` |
+| Tipos de notificación | snake_case | `nueva_tarea`, `nuevo_mensaje`, `entrega_calificada` | `perfil/notificaciones.js` |
+| Archivos | minúsculas o camelCase | `perfilAlumno.js`, `chatUI.js`, `login.css` | `movil-estudiante/`, `web-docente-admin-organizado/` |
+| Carpetas | minúsculas | `perfil`, `paginas`, `assets` | Raíz del proyecto |
+| Entidades del modelo de datos | MAYÚSCULAS y SNAKE_CASE | `GRADO_SECCION`, `DOCENTE_MATERIA` | `docs/modelo-datos.md` |
+
+> Todos los nombres de variables, funciones y mensajes del sistema están en español, el idioma del usuario final.
 
 ## 🎨 Identidad visual
 
