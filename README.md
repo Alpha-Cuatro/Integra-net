@@ -240,8 +240,10 @@ Datos definidos para probar el prototipo:
 
 > Estos usuarios deben existir en Supabase Auth (créalos desde **Authentication → Users** o con el registro de la app). Son solo para pruebas: **no uses estas credenciales en un entorno real.**
 
----
-
+---## Link de Azure
+http://20.88.60.127 (página principal)
+http://20.88.60.127/movil-estudiante/
+http://20.88.60.127/web-docente-admin-organizado/
 ## 🔒 Buenas prácticas aplicadas
 
 - Separación de responsabilidades por carpeta (`auth`, `docente`, `admin`, `perfil`, `backend`).
